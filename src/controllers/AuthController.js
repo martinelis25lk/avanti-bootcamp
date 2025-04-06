@@ -1,9 +1,8 @@
 import { prismaClient } from "../database/PrismaClient.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import * as fs from "fs"
 
-const privatekey = fs.readFileSync("keys/private.key")
+const privateKey = process.env.PRIVATE_KEY
 
 export class AuthController {
   async registrarUsuario(request, response) {
@@ -31,7 +30,7 @@ export class AuthController {
 
       const token = jwt.sign(
         {idUsuario: usuario.id, email:usuario.email},
-        privatekey,
+        privateKey,
         {expiresIn:"5h", algorithm:"HS256"}
       )
 
@@ -85,8 +84,8 @@ export class AuthController {
 
       const token = jwt.sign(
         {idUsuario: usuario.id, email:usuario.email},
-        privatekey,
-        {expiresIn:"5h", algorithm:"HS256"}
+        privateKey,
+        {expiresIn:"5h", algorithm:"RS256"}
       )
 
       return response.status(200).send({
