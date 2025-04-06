@@ -9,10 +9,12 @@ export class AuthController {
   async registrarUsuario(request, response) {
     const {email, senha, nome, telefone, } = request.body
 
-    if(!email || !senha || !nome)
-    return response.status(400).send({
-      erro: "Requisição com parâmetros faltando"
-    })
+    if(!email || !senha || !nome){
+      return response.status(400).send({
+        erro: "Requisição com parâmetros faltando"
+      })
+    }
+
 
     try{
       const senhaCriptografada = await bcrypt.hash(senha, 5)
@@ -30,7 +32,7 @@ export class AuthController {
       const token = jwt.sign(
         {idUsuario: usuario.id, email:usuario.email},
         privatekey,
-        {expiresIn:"5h"}
+        {expiresIn:"5h", algorithm:"HS256"}
       )
 
       response.status(200).send({
@@ -47,7 +49,7 @@ export class AuthController {
     } catch(error) {
       if(error.code == 'P2002')
         return response.status(400).send({
-        erro: "Já existe uma conta com o email informado"
+          erro: "Já existe uma conta com o email informado"
       })
 
       console.error(error)
@@ -55,8 +57,54 @@ export class AuthController {
     }
   }
 
-  autenticarUsuario(request, response) {
-    console.log(request.body)
-    return response.status(200)
+  async autenticarUsuario(request, response) {
+    const {email, senha} = request.body
+
+    if(!email || !senha) {
+      return response.status(400).send({
+        erro: "Requisição com parâmetros faltando"
+      })
+    }
+
+    try {
+      const usuario = await prismaClient.usuario.findUnique({where: {email:email}})
+
+      if(!usuario){
+        return response.status(400).send({
+          erro:"Email ou senha inválidos"
+        })
+      }
+
+      const compare = await bcrypt.compare(senha, usuario.senha)
+
+      if(!compare){
+        return response.status(400).send({
+          erro:"Email ou senha inválidos"
+        })
+      }
+
+      const token = jwt.sign(
+        {idUsuario: usuario.id, email:usuario.email},
+        privatekey,
+        {expiresIn:"5h", algorithm:"HS256"}
+      )
+
+      return response.status(200).send({
+        data: {
+          token,
+          email: usuario.email,
+          nome: usuario.nome,
+          telefone: usuario.telefone
+        }
+      })
+
+    } catch (error) {
+
+      console.error(error)
+
+      return response.send(500).send({
+        error: "Ocorreu um erro interno"
+      })
+    }
   }
 }

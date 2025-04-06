@@ -6,7 +6,7 @@ const authRouter = Router()
 const authController = new AuthController()
 
 authRouter.post("/auth/registrar", authController.registrarUsuario)
-authRouter.put("/auth/login", authController.autenticarUsuario)
+authRouter.post("/auth/login", authController.autenticarUsuario)
 
 
 export default authRouter
