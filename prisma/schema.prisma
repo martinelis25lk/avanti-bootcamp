@@ -8,11 +8,19 @@ datasource db {
 }
 
 model Usuario {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  nome          String
-  telefone      String?
-  senha         String
-  criado_em     DateTime
+  id            Int      @id @default(autoincrement())
+  nome          String   @db.VarChar(30)
+  email         String   @db.VarChar(100) @unique
+  telefone      String?  @db.VarChar(15)
+  senha         String   @db.VarChar(200)
+  criado_em     DateTime @default(now())
+  atualizado_em DateTime @updatedAt
+}
+
+model Categoria {
+  id            Int      @id @default(autoincrement())
+  nome          String   @db.VarChar(30)
+  prioridade    Int
+  criado_em     DateTime @default(now())
   atualizado_em DateTime @updatedAt
 }
