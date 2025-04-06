@@ -1,44 +1,45 @@
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import { MENSAGEM } from "../config/contants";
 
-const publicKey = process.env.PUBLIC_KEY
+const publicKey = process.env.PUBLIC_KEY;
 
 export default async function authMiddleware(request, response, next) {
-
-  if(!request.headers.authorization) {
+  if (!request.headers.authorization) {
     return response.status(401).send({
-      error: "Token faltando"
-    })
+      error: MENSAGEM.TOKEN_INVALIDO,
+    });
   }
 
-  const split = request.headers.authorization.split(" ")
+  if (!publicKey) {
+    return response.status(500).send({
+      erro: MENSAGEM.PUBLIC_KEY_AUSENTE,
+    });
+  }
 
-  if(!split){
+  const split = request.headers.authorization.split(" ");
+
+  if (!split) {
     return response.status(401).send({
-      error: "Token faltando"
-    })
+      error: MENSAGEM.TOKEN_INVALIDO,
+    });
   }
 
   const regex = new RegExp("Bearer");
 
-  if(!regex.test(split[0])){
+  if (!regex.test(split[0])) {
     return response.status(401).send({
-      error: "Token inválido"
-    })
+      error: MENSAGEM.TOKEN_INVALIDO,
+    });
   }
 
   try {
-
-    const payload = jwt.verify(split[1], publicKey, {algorithms:["RS256"]});
-    request.body.idUsuario = payload.idUsuario
-    request.body.email = payload.email
-    next()
-
+    const payload = jwt.verify(split[1], publicKey);
+    request.body.idUsuario = payload.idUsuario;
+    request.body.email = payload.email;
+    next();
   } catch (error) {
-
-    console.error(error)
-
     return response.status(401).send({
-      erro: "Token inválido ou expirado"
-    })
+      error: MENSAGEM.TOKEN_INVALIDO,
+    });
   }
 }

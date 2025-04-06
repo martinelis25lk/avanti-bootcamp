@@ -1,109 +1,122 @@
-import { prismaClient } from "../database/PrismaClient.js"
-import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
+import { prismaClient } from "../database/PrismaClient.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { CriarUsuarioDto } from "../dtos/CriarUsuarioDto.js";
+import { DEFAULT, MENSAGEM, PRISMA_CODE_ERROR } from "../config/contants.js";
+import { AutenticarUsuarioDto } from "../dtos/AutenticarUsuarioDto.js";
+import { validarDto } from "../validators/validarDto.js";
 
-const privateKey = process.env.PRIVATE_KEY
+const privateKey = process.env.PRIVATE_KEY;
+const expiresIn = process.env.EXPIRES_IN || DEFAULT.EXPIRES_IN;
 
 export class AuthController {
-  async registrarUsuario(request, response) {
-    const {email, senha, nome, telefone, } = request.body
+  async criarUsuario(request, response) {
+    const criarUsuarioDto = new CriarUsuarioDto(request.body);
 
-    if(!email || !senha || !nome){
-      return response.status(400).send({
-        erro: "Requisição com parâmetros faltando"
-      })
+    const eValido = await validarDto(criarUsuarioDto, response);
+    if (!eValido) {
+      return;
     }
 
+    if (!privateKey) {
+      return response.status(500).send({
+        erro: MENSAGEM.PRIVATE_KEY_AUSENTE,
+      });
+    }
 
-    try{
-      const senhaCriptografada = await bcrypt.hash(senha, 5)
+    try {
+      const senhaCriptografada = await bcrypt.hash(criarUsuarioDto.senha, 5);
 
       const usuario = await prismaClient.usuario.create({
-        data:{
-          email,
-          senha:senhaCriptografada,
-          nome,
-          telefone,
-          criado_em: new Date()
-        }
-      })
+        data: {
+          nome: criarUsuarioDto.nome,
+          telefone: criarUsuarioDto.telefone,
+          email: criarUsuarioDto.email,
+          senha: senhaCriptografada,
+        },
+      });
 
       const token = jwt.sign(
-        {idUsuario: usuario.id, email:usuario.email},
+        { idUsuario: usuario.id, email: usuario.email },
         privateKey,
-        {expiresIn:"5h", algorithm:"HS256"}
-      )
+        { expiresIn: expiresIn }
+      );
 
       response.status(200).send({
-        data:{
+        data: {
           token,
-          id:usuario.id,
-          email:usuario.email,
-          nome:usuario.nome,
-          telefone:usuario.telefone
-        }
-      })
-
-
-    } catch(error) {
-      if(error.code == 'P2002')
+          id: usuario.id,
+          email: usuario.email,
+          nome: usuario.nome,
+          telefone: usuario.telefone,
+        },
+      });
+    } catch (error) {
+      if (error.code === PRISMA_CODE_ERROR.RESTRICAO_DE_UNICIDADE) {
         return response.status(400).send({
-          erro: "Já existe uma conta com o email informado"
-      })
+          erro: MENSAGEM.EMAIL_EXISTENTE,
+        });
+      }
 
-      console.error(error)
-      return response.status(500)
+      return response.status(500).json({ error: error });
     }
   }
 
   async autenticarUsuario(request, response) {
-    const {email, senha} = request.body
+    const autenticarUsuarioDto = new AutenticarUsuarioDto(request.body);
 
-    if(!email || !senha) {
-      return response.status(400).send({
-        erro: "Requisição com parâmetros faltando"
-      })
+    const eValido = await validarDto(autenticarUsuarioDto, response);
+    if (!eValido) {
+      return;
+    }
+
+    if (!privateKey) {
+      return response.status(500).send({
+        erro: MENSAGEM.PRIVATE_KEY_AUSENTE,
+      });
     }
 
     try {
-      const usuario = await prismaClient.usuario.findUnique({where: {email:email}})
+      const usuario = await prismaClient.usuario.findFirst({
+        where: { email: autenticarUsuarioDto.email },
+      });
 
-      if(!usuario){
+      if (!usuario) {
         return response.status(400).send({
-          erro:"Email ou senha inválidos"
-        })
+          erro: MENSAGEM.EMAIL_OU_SENHA_INVALIDOS,
+        });
       }
 
-      const compare = await bcrypt.compare(senha, usuario.senha)
+      const validarSenha = await bcrypt.compare(
+        autenticarUsuarioDto.senha,
+        usuario.senha
+      );
 
-      if(!compare){
+      if (!validarSenha) {
         return response.status(400).send({
-          erro:"Email ou senha inválidos"
-        })
+          erro: MENSAGEM.EMAIL_OU_SENHA_INVALIDOS,
+        });
       }
 
       const token = jwt.sign(
-        {idUsuario: usuario.id, email:usuario.email},
+        { idUsuario: usuario.id, email: usuario.email },
         privateKey,
-        {expiresIn:"5h", algorithm:"RS256"}
-      )
+        { expiresIn: expiresIn }
+      );
 
       return response.status(200).send({
         data: {
           token,
+          id: usuario.id,
           email: usuario.email,
           nome: usuario.nome,
-          telefone: usuario.telefone
-        }
-      })
-
+          telefone: usuario.telefone,
+        },
+      });
     } catch (error) {
-
-      console.error(error)
-
       return response.send(500).send({
-        error: "Ocorreu um erro interno"
-      })
+        error: error,
+      });
     }
   }
 }
