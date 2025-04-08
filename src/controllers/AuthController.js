@@ -58,7 +58,8 @@ export class AuthController {
         });
       }
 
-      return response.status(500).json({ error: error });
+      console.error(error)
+      return response.status(500).json({ error: MENSAGEM.ERRO_INTERNO });
     }
   }
 
@@ -114,8 +115,10 @@ export class AuthController {
         },
       });
     } catch (error) {
+      console.error(error)
+
       return response.send(500).send({
-        error: error,
+        error: MENSAGEM.ERRO_INTERNO,
       });
     }
   }

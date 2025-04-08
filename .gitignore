@@ -54,6 +54,10 @@ web_modules/
 
 # Optional npm cache directory
 .npm
+imagens/
+*.jpeg
+*.png
+*.jpg
 
 *.key
 

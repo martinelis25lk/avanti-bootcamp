@@ -10,8 +10,8 @@ export const MENSAGEM = {
   SENHAS_DIFERENTES: "As senhas não coincidem.",
   EMAIL_OU_SENHA_INVALIDOS: "Email ou senha inválidos.",
   PRIVATE_KEY_AUSENTE: "PRIVATE_KEY não informada.",
-  PUBLIC_KEY_AUSENTE: "PUBLIC_KEY não informada.",
   TOKEN_INVALIDO: "Token inválido.",
+  ERRO_INTERNO: "Ocorreu um erro interno no servidor, por favor tente novamente mais tarde."
 };
 
 export const MENSAGEM_DTO = {

@@ -6,10 +6,11 @@ export class ItemController {
     try {
       const itens = await prismaClient.item.findMany({
         orderBy: { created_em: "desc" },
-        include: { usuario: true, prioridade: true }, 
+        include: { usuario: true},
       });
       return res.status(200).json(itens);
     } catch (error) {
+      console.error(error)
       return res.status(500).json({ error: error.message });
     }
   }
@@ -29,7 +30,7 @@ export class ItemController {
       logradouro,
       numero,
       status,
-      prioridade, 
+      prioridade,
     } = req.body;
 
     try {
@@ -54,6 +55,8 @@ export class ItemController {
 
       return res.status(201).json(novoItem);
     } catch (error) {
+      console.error(error)
+
       return res.status(500).json({ error: error.message });
     }
   }
@@ -98,6 +101,7 @@ export class ItemController {
 
       return res.status(200).json(itemAtualizado);
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ error: error.message });
     }
   }
@@ -112,6 +116,7 @@ export class ItemController {
 
       return res.status(204).send();
     } catch (error) {
+      console.error(error)
       return res.status(500).json({ error: error.message });
     }
   }

@@ -1,18 +1,20 @@
 import jwt from "jsonwebtoken";
-import { MENSAGEM } from "../config/contants";
+import { MENSAGEM } from "../config/contants.js";
 
-const publicKey = process.env.PUBLIC_KEY;
+const privateKey = process.env.PRIVATE_KEY;
 
-export default async function authMiddleware(request, response, next) {
+ async function authMiddleware(request, response, next) {
+
+
   if (!request.headers.authorization) {
     return response.status(401).send({
       error: MENSAGEM.TOKEN_INVALIDO,
     });
   }
 
-  if (!publicKey) {
+  if (!privateKey) {
     return response.status(500).send({
-      erro: MENSAGEM.PUBLIC_KEY_AUSENTE,
+      erro: MENSAGEM.PRIVATE_KEY_AUSENTE,
     });
   }
 
@@ -33,13 +35,22 @@ export default async function authMiddleware(request, response, next) {
   }
 
   try {
-    const payload = jwt.verify(split[1], publicKey);
-    request.body.idUsuario = payload.idUsuario;
+    const payload = jwt.verify(split[1], privateKey);
+
+    if(!request.body){
+      request.body = {}
+    }
+
+    request.body.usuario_id = payload.idUsuario;
     request.body.email = payload.email;
     next();
   } catch (error) {
+    console.error(error)
+
     return response.status(401).send({
       error: MENSAGEM.TOKEN_INVALIDO,
     });
   }
 }
+
+export { authMiddleware }
