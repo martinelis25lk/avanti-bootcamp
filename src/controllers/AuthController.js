@@ -57,10 +57,38 @@ export class AuthController {
           erro: MENSAGEM.EMAIL_EXISTENTE,
         });
       }
-
+      console.error(error);
       return response.status(500).json({ error: error });
     }
   }
+
+  async deletarUsuario(request, response){
+    const {idUsuario} = request.body;
+
+    try{
+      const usuario = await prismaClient.usuario.findUnique({
+        where:{id: idUsuario},
+      });
+
+      if(!usuario){
+        return response.status(404).json({erro: "Usuario não encontrado."});
+      }
+
+      await prismaClient.usuario.delete({
+        where:{id: idUsuario},
+      });
+
+      return response.status(200).json({MENSAGEM: "Usuario deletado com sucesso."});
+  
+    } catch (error){
+      console.log(error);
+      return response.status(500).json({erro: "Erro ao deletar usuário.", detalhes: error});
+    }
+  }
+
+
+
+  
 
   async autenticarUsuario(request, response) {
     const autenticarUsuarioDto = new AutenticarUsuarioDto(request.body);

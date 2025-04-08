@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { MENSAGEM } from "../config/contants";
+import { MENSAGEM } from "../config/contants.js";
 
 const publicKey = process.env.PUBLIC_KEY;
 

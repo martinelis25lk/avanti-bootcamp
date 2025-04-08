@@ -4,9 +4,10 @@ import authRouter from "./routes/AuthRoutes.js";
 import categoriaRouter from "./routes/CategoriaRoutes.js";
 
 const app = express();
+app.use(express.json());
 const port = 3000;
 
-app.use(express.json());
+
 app.use(cors());
 
 app.use(authRouter);
