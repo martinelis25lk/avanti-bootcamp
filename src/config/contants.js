@@ -27,8 +27,11 @@ export const MENSAGEM = {
   TOKEN_INVALIDO: "Token inválido.",
   ERRO_INTERNO: "Ocorreu um erro interno no servidor.",
   USUARIO_ID_NAO_INFORMADO: "usuarioId não foi informado.",
+  ITEM_ID_NAO_INFORMADO: "O itemId não foi informado.",
   USUARIO_ID_NAO_ENCONTRADO: (usuarioId) =>
     `O usuário com id ${usuarioId} não foi encontrado.`,
+  ITEM_ID_NAO_ENCONTRADO: (itemId) =>
+    `O item com id ${itemId} não foi encontrado.`,
   CATEGORIA_ID_NAO_ENCONTRADO: (categoriaId) =>
     `A categoria com id ${categoriaId} não foi encontrada.`,
   NENHUMA_IMAGEM_ENVIADA: "Nenhuma imagem foi enviada.",
@@ -86,6 +89,11 @@ export const MENSAGEM_DTO = {
       STRING: "O 'data_ocorrido' deve ser uma string.",
       INVALIDO:
         "O 'data_ocorrido' fornecido é inválido. Insira no formato YYYY-MM-DD HH:mm.",
+    },
+    DATA_ENTREGUE: {
+      STRING: "O 'data_entregue' deve ser uma string.",
+      INVALIDO:
+        "O 'data_entregue' fornecido é inválido. Insira no formato YYYY-MM-DD HH:mm.",
     },
     EMAIL: {
       STRING: "O 'email' deve ser uma string.",

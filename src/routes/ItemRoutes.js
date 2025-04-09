@@ -6,8 +6,9 @@ const itemRouter = Router();
 const itemController = new ItemController();
 
 itemRouter.get("/item", authMiddleware, itemController.buscarItens);
+itemRouter.get("/item/meu", authMiddleware, itemController.buscarMeusItens);
 itemRouter.post("/item", authMiddleware, itemController.criarItem);
-// itemRouter.put("/itens/:id", authMiddleware, itemController.atualizarItem);
-// itemRouter.delete("/itens/:id", authMiddleware, itemController.deletarItem);
+itemRouter.put("/item/:itemId", authMiddleware, itemController.editarItem);
+itemRouter.delete("/item/:itemId", authMiddleware, itemController.deletarItem);
 
 export default itemRouter;

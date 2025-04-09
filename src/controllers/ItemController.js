@@ -1,6 +1,7 @@
 import { MENSAGEM } from "../config/contants.js";
 import { prismaClient } from "../database/PrismaClient.js";
 import { CriarItemDto } from "../dtos/CriarItemDto.js";
+import { EditarItemDto } from "../dtos/EditarItemDto.js";
 import { validarDto } from "../validators/validarDto.js";
 
 export class ItemController {
@@ -12,6 +13,42 @@ export class ItemController {
       });
 
       return response.status(200).send(itens);
+    } catch (error) {
+      console.error(error);
+
+      return response.send(500).send({
+        erro: MENSAGEM.ERRO_INTERNO,
+      });
+    }
+  }
+
+  async buscarMeusItens(request, response) {
+    const usuarioId = request.usuarioId;
+
+    if (!usuarioId) {
+      return response.status(401).send({
+        erro: MENSAGEM.USUARIO_ID_NAO_INFORMADO,
+      });
+    }
+
+    try {
+      const usuario = await prismaClient.usuario.findFirst({
+        where: { id: usuarioId },
+      });
+
+      if (!usuario) {
+        return response.status(400).send({
+          erro: MENSAGEM.USUARIO_ID_NAO_ENCONTRADO(usuarioId),
+        });
+      }
+
+      const meusItens = await prismaClient.item.findMany({
+        where: { usuario_id: usuarioId },
+        orderBy: [{ categoria: { prioridade: "desc" } }, { criado_em: "desc" }],
+        include: { categoria: true },
+      });
+
+      return response.status(200).send(meusItens);
     } catch (error) {
       console.error(error);
 
@@ -86,59 +123,139 @@ export class ItemController {
     }
   }
 
-  // async atualizarItem(request, response) {
-  //   const { id } = request.params;
-  //   const {
-  //     nome,
-  //     foto,
-  //     data_ocorrido,
-  //     data_entregue,
-  //     email,
-  //     telefone,
-  //     estado,
-  //     cidade,
-  //     bairro,
-  //     logradouro,
-  //     numero,
-  //     status,
-  //     prioridade,
-  //   } = request.body;
+  async editarItem(request, response) {
+    const editarItemDto = new EditarItemDto(request.body);
+    const usuarioId = request.usuarioId;
+    const { itemId } = request.params;
 
-  //   try {
-  //     const itemAtualizado = await prismaClient.item.update({
-  //       where: { id: Number(id) },
-  //       data: {
-  //         nome,
-  //         foto,
-  //         data_ocorrido: new Date(data_ocorrido),
-  //         data_entregue: data_entregue ? new Date(data_entregue) : null,
-  //         email,
-  //         telefone,
-  //         estado,
-  //         cidade,
-  //         bairro,
-  //         logradouro,
-  //         numero,
-  //         status,
-  //         prioridade,
-  //       },
-  //     });
+    const eValido = await validarDto(editarItemDto, response);
+    if (!eValido) {
+      return;
+    }
 
-  //     return response.status(200).send(itemAtualizado);
-  //   } catch (error) {
-  //   }
-  // }
+    if (!usuarioId) {
+      return response.status(401).send({
+        erro: MENSAGEM.USUARIO_ID_NAO_INFORMADO,
+      });
+    }
 
-  // async deletarItem(request, response) {
-  //   const { id } = request.params;
+    if (!itemId) {
+      return response.status(401).send({
+        erro: MENSAGEM.ITEM_ID_NAO_INFORMADO,
+      });
+    }
 
-  //   try {
-  //     await prismaClient.item.delete({
-  //       where: { id: Number(id) },
-  //     });
+    try {
+      const usuario = await prismaClient.usuario.findFirst({
+        where: { id: usuarioId },
+      });
 
-  //     return response.status(204).send();
-  //   } catch (error) {
-  //   }
-  // }
+      if (!usuario) {
+        return response.status(400).send({
+          erro: MENSAGEM.USUARIO_ID_NAO_ENCONTRADO(usuarioId),
+        });
+      }
+
+      const item = await prismaClient.item.findFirst({
+        where: { id: parseInt(itemId), usuario_id: usuarioId },
+      });
+
+      if (!item) {
+        return response.status(400).send({
+          erro: MENSAGEM.ITEM_ID_NAO_ENCONTRADO(itemId),
+        });
+      }
+
+      const categoria = await prismaClient.categoria.findFirst({
+        where: { id: editarItemDto.categoria_id },
+      });
+
+      if (!categoria) {
+        return response.status(400).send({
+          erro: MENSAGEM.CATEGORIA_ID_NAO_ENCONTRADO(
+            editarItemDto.categoria_id
+          ),
+        });
+      }
+
+      const itemAtualizado = await prismaClient.item.update({
+        where: { id: parseInt(itemId) },
+        data: {
+          categoria_id: editarItemDto.categoria_id,
+          nome: editarItemDto.nome,
+          foto_url: editarItemDto.foto_url ? editarItemDto.foto_url : null,
+          data_ocorrido: new Date(editarItemDto.data_ocorrido),
+          data_entregue: editarItemDto.data_entregue
+            ? new Date(editarItemDto.data_entregue)
+            : null,
+          email: editarItemDto.email ? editarItemDto.email : null,
+          telefone: editarItemDto.telefone ? editarItemDto.telefone : null,
+          estado: editarItemDto.estado,
+          cidade: editarItemDto.cidade,
+          bairro: editarItemDto.bairro,
+          logradouro: editarItemDto.logradouro,
+          numero: editarItemDto.numero ? editarItemDto.numero : null,
+        },
+      });
+
+      return response.status(200).send(itemAtualizado);
+    } catch (error) {
+      console.error(error);
+
+      return response.send(500).send({
+        erro: MENSAGEM.ERRO_INTERNO,
+      });
+    }
+  }
+
+  async deletarItem(request, response) {
+    const usuarioId = request.usuarioId;
+    const { itemId } = request.params;
+
+    if (!usuarioId) {
+      return response.status(401).send({
+        erro: MENSAGEM.USUARIO_ID_NAO_INFORMADO,
+      });
+    }
+
+    if (!itemId) {
+      return response.status(401).send({
+        erro: MENSAGEM.ITEM_ID_NAO_INFORMADO,
+      });
+    }
+
+    try {
+      const usuario = await prismaClient.usuario.findFirst({
+        where: { id: usuarioId },
+      });
+
+      if (!usuario) {
+        return response.status(400).send({
+          erro: MENSAGEM.USUARIO_ID_NAO_ENCONTRADO(usuarioId),
+        });
+      }
+
+      const item = await prismaClient.item.findFirst({
+        where: { id: parseInt(itemId), usuario_id: usuarioId },
+      });
+
+      if (!item) {
+        return response.status(400).send({
+          erro: MENSAGEM.ITEM_ID_NAO_ENCONTRADO(itemId),
+        });
+      }
+
+      await prismaClient.item.delete({
+        where: { id: parseInt(itemId) },
+      });
+
+      return response.status(204).send();
+    } catch (error) {
+      console.error(error);
+
+      return response.send(500).send({
+        erro: MENSAGEM.ERRO_INTERNO,
+      });
+    }
+  }
 }
