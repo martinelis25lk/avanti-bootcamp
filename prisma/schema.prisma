@@ -13,8 +13,10 @@ model Usuario {
   email         String   @unique @db.VarChar(100)
   telefone      String?  @db.VarChar(15)
   senha         String   @db.VarChar(200)
+
   criado_em     DateTime @default(now())
   atualizado_em DateTime @updatedAt
+
   itens         Item[]
 }
 
@@ -22,25 +24,21 @@ model Categoria {
   id            Int      @id @default(autoincrement())
   nome          String   @db.VarChar(30)
   prioridade    Int
+
   criado_em     DateTime @default(now())
   atualizado_em DateTime @updatedAt
-  itens         Item[]
-}
 
-enum Prioridade {
-  UM
-  DOIS
-  TRES
+  itens         Item[]
 }
 
 model Item {
   id            Int         @id @default(autoincrement())
   usuario_id    Int
-  usuario       Usuario     @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
+  categoria_id  Int
   nome          String      @db.VarChar(50)
-  fotoUrl       String?
-  data_ocorrido DateTime    @db.Date
-  data_entregue DateTime?   @db.Date
+  foto_url      String?
+  data_ocorrido DateTime    @db.Timestamp
+  data_entregue DateTime?   @db.Timestamp
   email         String?     @db.VarChar(100)
   telefone      String?     @db.VarChar(15)
   estado        String      @db.VarChar(30)
@@ -49,11 +47,10 @@ model Item {
   logradouro    String      @db.VarChar(100)
   numero        Int?
   status        String      @db.VarChar(10)
-  created_em    DateTime    @default(now()) @db.Timestamp(6)
-  atualizado_em DateTime    @updatedAt @db.Timestamp(6)
-  prioridade    Prioridade?
-  Categoria     Categoria?  @relation(fields: [categoriaId], references: [id])
-  categoriaId   Int?
 
-  @@map("item")
+  criado_em     DateTime    @default(now())
+  atualizado_em DateTime    @updatedAt
+
+  usuario       Usuario     @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoria     Categoria   @relation(fields: [categoria_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

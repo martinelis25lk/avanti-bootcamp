@@ -1,9 +1,13 @@
-export class ImgController{
-  upload(req, res) {
-    if(!req.file){
-      return res.status(400).json({error: 'Nenhum arquivo foi enviado'});
+import { MENSAGEM } from "../config/contants.js";
+
+export class ImgController {
+  upload(request, response) {
+    if (!request.file) {
+      return response
+        .status(400)
+        .send({ erro: MENSAGEM.NENHUMA_IMAGEM_ENVIADA });
     }
 
-    res.status(200).send({message: "Upload de imagem realizado com sucesso"});
+    response.status(200).send({ mensagem: MENSAGEM.UPLOAD_IMAGEM_SUCESSO });
   }
 }

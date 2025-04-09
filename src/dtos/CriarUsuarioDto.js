@@ -56,7 +56,7 @@ export class CriarUsuarioDto {
         campo: "email",
         mensagem: MENSAGEM_DTO.USUARIO.EMAIL.MIN,
       });
-    } else if (this.nome.length > USUARIO.NOME.MAX) {
+    } else if (this.email.length > USUARIO.EMAIL.MAX) {
       erros.push({
         campo: "email",
         mensagem: MENSAGEM_DTO.USUARIO.EMAIL.MAX,

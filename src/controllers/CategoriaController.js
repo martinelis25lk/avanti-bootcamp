@@ -1,3 +1,4 @@
+import { MENSAGEM } from "../config/contants.js";
 import { prismaClient } from "../database/PrismaClient.js";
 
 export class CategoriaController {
@@ -9,9 +10,13 @@ export class CategoriaController {
         },
       });
 
-      response.status(200).json(categorias);
+      response.status(200).send(categorias);
     } catch (error) {
-      return response.status(500).json({ error: error });
+      console.error(error);
+
+      return response.send(500).send({
+        erro: MENSAGEM.ERRO_INTERNO,
+      });
     }
   }
 }

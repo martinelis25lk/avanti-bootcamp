@@ -30,36 +30,35 @@ export class AuthController {
       const usuario = await prismaClient.usuario.create({
         data: {
           nome: criarUsuarioDto.nome,
-          telefone: criarUsuarioDto.telefone,
+          telefone: criarUsuarioDto.telefone ? criarUsuarioDto.telefone : null,
           email: criarUsuarioDto.email,
           senha: senhaCriptografada,
         },
       });
 
-      const token = jwt.sign(
-        { idUsuario: usuario.id, email: usuario.email },
-        privateKey,
-        { expiresIn: expiresIn }
-      );
+      const token = jwt.sign({ usuarioId: usuario.id }, privateKey, {
+        expiresIn: expiresIn,
+      });
 
       response.status(200).send({
-        data: {
-          token,
+        token: token,
+        usuario: {
           id: usuario.id,
-          email: usuario.email,
           nome: usuario.nome,
           telefone: usuario.telefone,
+          email: usuario.email,
         },
       });
     } catch (error) {
+      console.error(error);
+
       if (error.code === PRISMA_CODE_ERROR.RESTRICAO_DE_UNICIDADE) {
         return response.status(400).send({
           erro: MENSAGEM.EMAIL_EXISTENTE,
         });
       }
 
-      console.error(error)
-      return response.status(500).json({ error: MENSAGEM.ERRO_INTERNO });
+      return response.status(500).send({ erro: MENSAGEM.ERRO_INTERNO });
     }
   }
 
@@ -99,26 +98,24 @@ export class AuthController {
         });
       }
 
-      const token = jwt.sign(
-        { idUsuario: usuario.id, email: usuario.email },
-        privateKey,
-        { expiresIn: expiresIn }
-      );
+      const token = jwt.sign({ usuarioId: usuario.id }, privateKey, {
+        expiresIn: expiresIn,
+      });
 
       return response.status(200).send({
-        data: {
-          token,
+        token: token,
+        usuario: {
           id: usuario.id,
-          email: usuario.email,
           nome: usuario.nome,
           telefone: usuario.telefone,
+          email: usuario.email,
         },
       });
     } catch (error) {
-      console.error(error)
+      console.error(error);
 
       return response.send(500).send({
-        error: MENSAGEM.ERRO_INTERNO,
+        erro: MENSAGEM.ERRO_INTERNO,
       });
     }
   }
