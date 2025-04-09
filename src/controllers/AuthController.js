@@ -2,7 +2,7 @@ import { prismaClient } from "../database/PrismaClient.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { CriarUsuarioDto } from "../dtos/CriarUsuarioDto.js";
-import { DEFAULT, MENSAGEM, PRISMA_CODE_ERROR } from "../config/contants.js";
+import { DEFAULT, MENSAGEM, MENSAGEM_DTO, PRISMA_CODE_ERROR } from "../config/contants.js";
 import { AutenticarUsuarioDto } from "../dtos/AutenticarUsuarioDto.js";
 import { validarDto } from "../validators/validarDto.js";
 
@@ -40,7 +40,7 @@ export class AuthController {
         expiresIn: expiresIn,
       });
 
-      response.status(200).send({
+      response.status(201).send({
         token: token,
         usuario: {
           id: usuario.id,
@@ -53,7 +53,7 @@ export class AuthController {
       console.error(error);
 
       if (error.code === PRISMA_CODE_ERROR.RESTRICAO_DE_UNICIDADE) {
-        return response.status(400).send({
+        return response.status(409).send({
           erro: MENSAGEM.EMAIL_EXISTENTE,
         });
       }
@@ -72,7 +72,7 @@ export class AuthController {
 
     if (!privateKey) {
       return response.status(500).send({
-        erro: MENSAGEM.PRIVATE_KEY_AUSENTE,
+        erro: MENSAGEM.ERRO_INTERNO,
       });
     }
 
@@ -82,7 +82,7 @@ export class AuthController {
       });
 
       if (!usuario) {
-        return response.status(400).send({
+        return response.status(401).send({
           erro: MENSAGEM.EMAIL_OU_SENHA_INVALIDOS,
         });
       }
@@ -93,7 +93,7 @@ export class AuthController {
       );
 
       if (!validarSenha) {
-        return response.status(400).send({
+        return response.status(401).send({
           erro: MENSAGEM.EMAIL_OU_SENHA_INVALIDOS,
         });
       }

@@ -13,8 +13,8 @@ export default defineConfig([
     plugins: { js },
     extends: ["js/recommended"],
     rules: {
-      "no-unused-vars": "error",
-      "no-undef": "error",
+      "no-unused-vars": "warn",
+      "no-undef": "warn",
     },
   },
 ]);

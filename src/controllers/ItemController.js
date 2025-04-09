@@ -32,7 +32,7 @@ export class ItemController {
     }
 
     try {
-      const usuario = await prismaClient.usuario.findFirst({
+      const usuario = await prismaClient.usuario.findUnique({
         where: { id: usuarioId },
       });
 
@@ -74,7 +74,7 @@ export class ItemController {
     }
 
     try {
-      const usuario = await prismaClient.usuario.findFirst({
+      const usuario = await prismaClient.usuario.findUnique({
         where: { id: usuarioId },
       });
 
@@ -140,23 +140,23 @@ export class ItemController {
     }
 
     if (!itemId) {
-      return response.status(401).send({
+      return response.status(400).send({
         erro: MENSAGEM.ITEM_ID_NAO_INFORMADO,
       });
     }
 
     try {
-      const usuario = await prismaClient.usuario.findFirst({
+      const usuario = await prismaClient.usuario.findUnique({
         where: { id: usuarioId },
       });
 
       if (!usuario) {
-        return response.status(400).send({
+        return response.status(401).send({
           erro: MENSAGEM.USUARIO_ID_NAO_ENCONTRADO(usuarioId),
         });
       }
 
-      const item = await prismaClient.item.findFirst({
+      const item = await prismaClient.item.findUnique({
         where: { id: parseInt(itemId), usuario_id: usuarioId },
       });
 
@@ -219,7 +219,7 @@ export class ItemController {
     }
 
     if (!itemId) {
-      return response.status(401).send({
+      return response.status(400).send({
         erro: MENSAGEM.ITEM_ID_NAO_INFORMADO,
       });
     }
@@ -230,12 +230,12 @@ export class ItemController {
       });
 
       if (!usuario) {
-        return response.status(400).send({
+        return response.status(401).send({
           erro: MENSAGEM.USUARIO_ID_NAO_ENCONTRADO(usuarioId),
         });
       }
 
-      const item = await prismaClient.item.findFirst({
+      const item = await prismaClient.item.findUnique({
         where: { id: parseInt(itemId), usuario_id: usuarioId },
       });
 
