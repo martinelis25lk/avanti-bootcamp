@@ -14,7 +14,7 @@ export class CategoriaController {
     } catch (error) {
       console.error(error);
 
-      return response.send(500).send({
+      return response.status(500).send({
         erro: MENSAGEM.ERRO_INTERNO,
       });
     }
