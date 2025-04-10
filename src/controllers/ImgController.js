@@ -1,5 +1,6 @@
 import { DEFAULT, MENSAGEM } from "../config/contants.js";
 import {prismaClient} from "../database/PrismaClient.js";
+import path from "path";
 import * as fs from "fs";
 
 export class ImgController {
@@ -47,5 +48,20 @@ export class ImgController {
       response.status(500).send({Mensagem: MENSAGEM.ERRO_INTERNO})
     }
 
+  }
+
+  async downloadImgItem(request, response) {
+    try {
+      const nomeArquivo = request.params.nome;
+      const caminho = path.join(process.cwd(), "imagens", nomeArquivo)
+
+      if(!fs.existsSync(caminho))
+        return response.status(400).send({erro: MENSAGEM.IMAGEM_NAO_ENCONTRADA})
+
+      response.sendFile(caminho)
+    } catch (error) {
+      console.error(error)
+      response.status(500).send({erro:MENSAGEM.ERRO_INTERNO})
+    }
   }
 }

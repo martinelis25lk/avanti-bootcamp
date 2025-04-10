@@ -34,8 +34,9 @@ export const MENSAGEM = {
     `O item com id ${itemId} não foi encontrado.`,
   CATEGORIA_ID_NAO_ENCONTRADO: (categoriaId) =>
     `A categoria com id ${categoriaId} não foi encontrada.`,
-  NENHUMA_IMAGEM_ENVIADA: "Nenhuma imagem foi enviada.",
+  NENHUMA_IMAGEM_ENVIADA: "Nenhuma imagem foi enviada ou formato inválido.",
   UPLOAD_IMAGEM_SUCESSO: "Upload de imagem realizado com sucesso.",
+  IMAGEM_NAO_ENCONTRADA: "A imagem não foi encontrada."
 };
 
 export const MENSAGEM_DTO = {
