@@ -4,7 +4,15 @@ import { MENSAGEM } from "../config/contants.js";
 const privateKey = process.env.PRIVATE_KEY;
 
 async function authMiddleware(request, response, next) {
-  const [bearer, token] = request.headers.authorization.split(" ");
+  const authorization = request.headers.authorization;
+
+  if (!authorization) {
+    return response.status(401).send({
+      erro: MENSAGEM.TOKEN_INVALIDO,
+    });
+  }
+
+  const [bearer, token] = authorization.split(" ");
 
   if (!token || bearer != "Bearer") {
     return response.status(401).send({

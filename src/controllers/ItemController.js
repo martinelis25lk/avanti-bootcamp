@@ -84,7 +84,7 @@ export class ItemController {
         });
       }
 
-      const categoria = await prismaClient.categoria.findFirst({
+      const categoria = await prismaClient.categoria.findUnique({
         where: { id: criarItemDto.categoria_id },
       });
 
@@ -166,7 +166,7 @@ export class ItemController {
         });
       }
 
-      const categoria = await prismaClient.categoria.findFirst({
+      const categoria = await prismaClient.categoria.findUnique({
         where: { id: editarItemDto.categoria_id },
       });
 
@@ -225,7 +225,7 @@ export class ItemController {
     }
 
     try {
-      const usuario = await prismaClient.usuario.findFirst({
+      const usuario = await prismaClient.usuario.findUnique({
         where: { id: usuarioId },
       });
 

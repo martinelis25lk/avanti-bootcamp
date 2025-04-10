@@ -77,7 +77,7 @@ export class AuthController {
     }
 
     try {
-      const usuario = await prismaClient.usuario.findFirst({
+      const usuario = await prismaClient.usuario.findUnique({
         where: { email: autenticarUsuarioDto.email },
       });
 
@@ -111,6 +111,40 @@ export class AuthController {
           email: usuario.email,
         },
       });
+    } catch (error) {
+      console.error(error);
+
+      return response.status(500).send({
+        erro: MENSAGEM.ERRO_INTERNO,
+      });
+    }
+  }
+
+  async deletarUsuario(request, response) {
+    const usuarioId = request.usuarioId;
+
+    if (!usuarioId) {
+      return response.status(401).send({
+        erro: MENSAGEM.USUARIO_ID_NAO_INFORMADO,
+      });
+    }
+
+    try {
+      const usuario = await prismaClient.usuario.findUnique({
+        where: { id: usuarioId },
+      });
+
+      if (!usuario) {
+        return response.status(401).send({
+          erro: MENSAGEM.USUARIO_ID_NAO_ENCONTRADO(usuarioId),
+        });
+      }
+
+      await prismaClient.usuario.delete({
+        where: { id: parseInt(usuarioId) },
+      });
+
+      return response.status(204).send();
     } catch (error) {
       console.error(error);
 
