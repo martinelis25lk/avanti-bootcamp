@@ -2,7 +2,7 @@ import { prismaClient } from "../database/PrismaClient.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { CriarUsuarioDto } from "../dtos/CriarUsuarioDto.js";
-import { DEFAULT, MENSAGEM, MENSAGEM_DTO, PRISMA_CODE_ERROR } from "../config/contants.js";
+import { DEFAULT, MENSAGEM, PRISMA_CODE_ERROR } from "../config/contants.js";
 import { AutenticarUsuarioDto } from "../dtos/AutenticarUsuarioDto.js";
 import { validarDto } from "../validators/validarDto.js";
 

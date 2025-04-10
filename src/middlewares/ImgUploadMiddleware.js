@@ -7,9 +7,9 @@ const storage = multer.diskStorage({
   },
   filename: (request, file, cb) => {
     const uniqueName =
-      Date.now() +
-      "-item" +
-      request.params.id +
+      "item_img_" +
+      Date.now() *
+      parseInt(request.params.id) +
       path.extname(file.originalname);
     cb(null, uniqueName);
   },

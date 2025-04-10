@@ -146,6 +146,7 @@ export const MENSAGEM_DTO = {
 
 export const DEFAULT = {
   EXPIRES_IN: "5h",
+  APP_URL: "localhost:3000"
 };
 
 export const PRISMA_CODE_ERROR = {
