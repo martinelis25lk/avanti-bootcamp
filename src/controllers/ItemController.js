@@ -3,13 +3,45 @@ import { prismaClient } from "../database/PrismaClient.js";
 import { CriarItemDto } from "../dtos/CriarItemDto.js";
 import { EditarItemDto } from "../dtos/EditarItemDto.js";
 import { validarDto } from "../validators/validarDto.js";
+import { construirWhere } from "../utils/ConstrutorDeWhere.js";
 
 export class ItemController {
+  construirFiltro({categoria, cidade, status, data_inicio, data_fim}) {
+
+    const filtro = {}
+
+    if(categoria){
+      filtro.categoria = {
+        id:parseInt(categoria)
+      }
+    }
+
+    if(cidade)
+      filtro.cidade = cidade;
+
+    if(data_inicio || data_fim){
+      filtro.data_ocorrido = {}
+
+      if(data_inicio)
+        filtro.data_ocorrido.gte = new Date(data_inicio)
+      if(data_fim)
+        filtro.data_ocorrido.lte = new Date(data_fim)
+    }
+
+    if(status)
+      filtro.status = status;
+
+    return filtro;
+  }
+
   async buscarItens(request, response) {
     try {
+      const filtro = !request.query ? {} : construirWhere(request.query)
+
       const itens = await prismaClient.item.findMany({
         orderBy: [{ categoria: { prioridade: "desc" } }, { criado_em: "desc" }],
         include: { categoria: true },
+        where: filtro
       });
 
       return response.status(200).send(itens);
@@ -258,4 +290,6 @@ export class ItemController {
       });
     }
   }
+
+
 }
