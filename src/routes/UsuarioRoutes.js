@@ -5,13 +5,13 @@ import { UsuarioController } from "../controllers/UsuarioController.js";
 const usuarioRouter = Router();
 const usuarioController = new UsuarioController();
 
-usuarioRouter.post("/usuario/criar", usuarioController.criarUsuario);
+usuarioRouter.post("/usuario", usuarioController.criarUsuario);
 usuarioRouter.delete(
   "/usuario/deletar",
   authMiddleware,
   usuarioController.deletarUsuario
 );
 
-usuarioRouter.put("/usuario/editar", authMiddleware, usuarioController.atualizarUsuario);
+usuarioRouter.put("/usuario", authMiddleware, usuarioController.atualizarUsuario);
 
 export default usuarioRouter;

@@ -7,6 +7,6 @@ import { authMiddleware } from "../middlewares/authMiddleware.js"
 const imgRouter = Router();
 const imgController = new ImgController();
 
-imgRouter.post("/item/img/:id", authMiddleware, imgUploadMiddleware.single("imagem"), imgController.uploadImgItem)
-imgRouter.get("/item/img/:nome", authMiddleware, imgController.downloadImgItem)
+imgRouter.post("/item/img/:itemId", authMiddleware, imgUploadMiddleware.single("imagem"), imgController.uploadImgItem)
+imgRouter.get("/item/img/:nomeImg", authMiddleware, imgController.downloadImgItem)
 export default imgRouter;

@@ -6,7 +6,7 @@ import * as fs from "fs";
 export class ImgController {
   async uploadImgItem(request, response) {
     const appURL = process.env.APP_URL || DEFAULT.APP_URL;
-    const itemId = parseInt(request.params.id);
+    const itemId = parseInt(request.params.itemId);
 
     if (!request.file) {
       return response
@@ -50,15 +50,15 @@ export class ImgController {
 
   async downloadImgItem(request, response) {
     try {
-      const nomeArquivo = request.params.nome;
+      const nomeArquivo = request.params.nomeImg;
       const caminho = path.join(process.cwd(), "imagens", nomeArquivo);
 
       if (!fs.existsSync(caminho))
         return response
-          .status(400)
+          .status(404)
           .send({ erro: MENSAGEM.IMAGEM_NAO_ENCONTRADA });
 
-      response.sendFile(caminho);
+      response.status(200).sendFile(caminho);
     } catch (error) {
       console.error(error);
       response.status(500).send({ erro: MENSAGEM.ERRO_INTERNO });

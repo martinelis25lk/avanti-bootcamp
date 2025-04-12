@@ -111,7 +111,7 @@ export class ItemController {
       });
 
       if (!usuario) {
-        return response.status(400).send({
+        return response.status(401).send({
           erro: MENSAGEM.USUARIO_ID_NAO_ENCONTRADO(usuarioId),
         });
       }
