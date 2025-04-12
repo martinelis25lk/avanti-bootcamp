@@ -111,7 +111,7 @@ export class UsuarioController {
             return response.status(200).json({Usuario})
         } catch (error) {
             console.error(error)
-            return response.status(500).json({ erro: 'Erro ao atualizar usuário: ' + error.message})
+            return response.status(500).json({ erro: MENSAGEM.ERRO_INTERNO})
         }
     }
 }
