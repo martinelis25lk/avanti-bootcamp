@@ -136,7 +136,14 @@ export class UsuarioController {
             senha: senhaCriptografada
           }
       })
-      return response.status(200).json({usuarioAtualizado})
+      return response.status(200).json({
+        id: usuarioAtualizado.id,
+        nome: usuarioAtualizado.nome,
+        email: usuarioAtualizado.email,
+        telefone: usuarioAtualizado.telefone,
+        criado_em: usuario.criado_em,
+        atualizadoem: usuario.atualizado_em
+      })
 
     } catch (error) {
       console.error(error)
