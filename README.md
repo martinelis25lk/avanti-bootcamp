@@ -45,8 +45,8 @@ Este documento descreve as variáveis de ambiente que precisam ser configuradas 
 
 ### 📌 Banco de dados:
 
-# Define a URL base da aplicação.
-# Por padrão, a aplicação roda localmente na porta 3000
+- **Define a URL base da aplicação.**
+- **Por padrão, a aplicação roda localmente na porta 3000.**
 
 - `DATABASE_URL`**: Endereço completo para conexão com o banco de dados PostgreSQL. Inclui informações como protocolo, usuário, senha, host, porta e nome do banco de dados. Use `localhost` caso o banco de dados esteja rodando localmente.
     - **Exemplo:** `postgres://postgres:mysecretpassword@localhost:5432/bootcamp_trabalho`
