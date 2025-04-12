@@ -4,6 +4,16 @@ Objetos perdidos em locais públicos — como escolas, parques e centros comunit
 
 ## Funcionalidades
 
+### 📌 Cadastro de Usuário
+- Nome
+- Email
+- Telefone (opcional)
+- Senha (criptografada com bcrypt)
+
+### 📌 Login
+- Autenticação via JWT
+- Geração de token para acesso a rotas protegidas
+
 ### 📌 Cadastro de Itens
 - **Descrição do objeto**: Uma identificação rápida (ex: "Carteira preta com zíper").
 - **Categoria**: Tipo do item (documentos, roupas, eletrônicos, etc.).
