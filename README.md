@@ -42,6 +42,10 @@ Este documento descreve as variáveis de ambiente que precisam ser configuradas 
 
 ## 🗄️ No arquivo `.env`, configurar:
 
+<div align="center" >
+<img src="https://github.com/user-attachments/assets/7ba07b32-49a2-46a6-a538-8eb27a32a2d8" width="700px"/>
+</div>
+
 
 ### 📌 Banco de dados:
 
