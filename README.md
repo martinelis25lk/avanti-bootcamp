@@ -7,7 +7,7 @@ Objetos perdidos em locais públicos — como escolas, parques e centros comunit
 ### 📌 Cadastro de Usuário
 - Nome
 - Email
-- Telefone (opcional)
+- Telefone
 - Senha (criptografada com bcrypt)
 
 ### 📌 Login
