@@ -68,12 +68,6 @@ Este documento descreve as variáveis de ambiente que precisam ser configuradas 
 - **`EXPIRES_IN`**: Tempo de expiração dos tokens de autenticação. O valor `"5h"` indica que os tokens terão uma validade de 5 horas.
     - **Exemplo:** `5h`
 
-DATABASE_URL=postgres://postgres:mysecretpassword@localhost:5432/bootcamp_trabalho
-
-PRIVATE_KEY=keymuitograndeblablablablabla
-EXPIRES_IN=5h
-
-SWAGGER_URL=http://localhost:3000/api-docs
 
 ## 📌 Observações:
 
