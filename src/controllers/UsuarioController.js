@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { CriarUsuarioDto } from "../dtos/CriarUsuarioDto.js";
 import { DEFAULT, MENSAGEM, PRISMA_CODE_ERROR } from "../config/contants.js";
 import { validarDto } from "../validators/validarDto.js";
+import { EditarUsuarioDto } from "../dtos/EditarUsuarioDto.js";
 
 const privateKey = process.env.PRIVATE_KEY;
 const expiresIn = process.env.EXPIRES_IN || DEFAULT.EXPIRES_IN;
@@ -96,22 +97,50 @@ export class UsuarioController {
   }
 
   async atualizarUsuario(request, response) {
-        const id = request.usuarioId;
+    const id = request.usuarioId;
+    const editarUsuarioDto = new EditarUsuarioDto(request.body);
 
-        const {nome, telefone, senha} = request.body;
-        try {
-            const Usuario = await prismaClient.Usuario.update({
-                where: {id: id},
-                data: {
-                   nome: nome,
-                   telefone: telefone,
-                   senha: senha
-                }
-            })
-            return response.status(200).json({Usuario})
-        } catch (error) {
-            console.error(error)
-            return response.status(500).json({ erro: MENSAGEM.ERRO_INTERNO})
-        }
+    const eValido = await validarDto(editarUsuarioDto, response);
+    if (!eValido){
+      return;
     }
+
+    if(!id){
+      return response.status(401).send({
+        erro: MENSAGEM.USUARIO_ID_NAO_INFORMADO
+      })
+    }
+
+
+    try {
+      const usuario = await prismaClient.usuario.findFirst({
+        where: {id}
+      })
+
+      if (!usuario) {
+        return response.status(401).send({
+          erro: MENSAGEM.USUARIO_ID_NAO_ENCONTRADO(id)
+        })
+      }
+
+      const senhaCriptografada = await bcrypt.hash(
+        editarUsuarioDto.senha,
+        5
+      )
+
+      const usuarioAtualizado = await prismaClient.Usuario.update({
+          where: {id},
+          data: {
+            nome: editarUsuarioDto.nome,
+            telefone: editarUsuarioDto.telefone,
+            senha: senhaCriptografada
+          }
+      })
+      return response.status(200).json({usuarioAtualizado})
+
+    } catch (error) {
+      console.error(error)
+      return response.status(500).json({ erro: MENSAGEM.ERRO_INTERNO})
+    }
+  }
 }

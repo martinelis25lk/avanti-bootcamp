@@ -6,12 +6,17 @@ const usuarioRouter = Router();
 const usuarioController = new UsuarioController();
 
 usuarioRouter.post("/usuario", usuarioController.criarUsuario);
+
 usuarioRouter.delete(
-  "/usuario/deletar",
+  "/usuario",
   authMiddleware,
   usuarioController.deletarUsuario
 );
 
-usuarioRouter.put("/usuario", authMiddleware, usuarioController.atualizarUsuario);
+usuarioRouter.put(
+  "/usuario",
+  authMiddleware,
+  usuarioController.atualizarUsuario
+);
 
 export default usuarioRouter;
