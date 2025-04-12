@@ -94,4 +94,24 @@ export class UsuarioController {
       });
     }
   }
+
+  async atualizarUsuario(request, response) {
+        const id = request.usuarioId;
+
+        const {nome, telefone, senha} = request.body;
+        try {
+            const Usuario = await prismaClient.Usuario.update({
+                where: {id: id},
+                data: {
+                   nome: nome,
+                   telefone: telefone,
+                   senha: senha
+                }
+            })
+            return response.status(200).json({Usuario})
+        } catch (error) {
+            console.error(error)
+            return response.status(500).json({ erro: 'Erro ao atualizar usuário: ' + error.message})
+        }
+    }
 }

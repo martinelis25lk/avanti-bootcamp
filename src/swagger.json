@@ -1,0 +1,188 @@
+{
+  "openapi":"3.0.3",
+  "info": {
+    "title": "API Avanti-bootcamp",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/auth/login": {
+      "post":{
+        "summary": "Rota para a realização do login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestBody"
+              }
+            }
+          }
+        },
+        "responses":{
+          "200": {
+            "description": "O login foi realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioComToken"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ocorreu um erro no servidor durante o request",
+            "content": {
+              "application/json": {
+                "schema": {
+                   "$ref": "#/components/schemas/ResponseErro"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "O email ou a senha estavam incorretos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseErro"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuario/criar": {
+      "post": {
+        "summary": "Rota para cadastro de um novo usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioParaCadastro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "O cadastro do usuário foi realizado com sucesso",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioComToken"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ocorreu um erro no servidor durante o request",
+            "content": {
+              "application/json": {
+                "schema": {
+                   "$ref": "#/components/schemas/ResponseErro"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "O email utilizado já possui um cadastro no sistema",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseErro"
+                }
+              }
+            }
+          }
+
+        }
+      },
+      "delete": {
+        "summary": "Exclusão de um usuário",
+        "security": [
+          {"bearerAuth": []}
+        ],
+        "responses": {
+          "204": {
+            "description": "O usuário foi excluido com sucesso"
+          },
+          "500": {
+            "description": "Ocorreu um erro no servidor durante o request",
+            "content": {
+              "application/json": {
+                "schema": {
+                   "$ref": "#/components/schemas/ResponseErro"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "O token passado é inválido ou o id não está vinculado com um usuário",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "$ref": "#/components/schemas/ResponseErro"
+                }
+              }
+            }
+          }
+
+        }
+      }
+    }
+  },
+
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "LoginRequestBody": {
+        "type": "object",
+        "properties": {
+          "email": {"type": "string", "format":"email"},
+          "senha": {"type": "string", "format": "password"}
+        }
+      },
+      "UsuarioComToken": {
+        "type": "object",
+        "properties": {
+          "token": {"type": "string"},
+          "usuario": {"$ref":"#/components/schemas/UsuarioSemSenha"}
+        }
+      },
+      "UsuarioSemSenha": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "nome": {"type": "string"},
+          "telefone": {"type": "string"},
+          "email": {"type": "string", "format": "email"}
+        }
+      },
+      "UsuarioParaCadastro": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "nome": {"type": "string"},
+          "telefone": {"type": "string"},
+          "email": {"type": "string", "format": "email"},
+          "senha": {"type": "string", "format": "password"},
+          "confirmarSenha": {"type": "string", "format": "password"}
+        }
+      },
+      "ResponseErro": {
+        "type": "object",
+        "properties": {
+          "erro": {"type": "string"}
+        }
+      }
+    }
+  }
+}

@@ -8,49 +8,49 @@ datasource db {
 }
 
 model Usuario {
-  id            Int      @id @default(autoincrement())
-  nome          String   @db.VarChar(30)
-  email         String   @unique @db.VarChar(100)
-  telefone      String?  @db.VarChar(15)
-  senha         String   @db.VarChar(200)
+  id       Int     @id @default(autoincrement())
+  nome     String  @db.VarChar(30)
+  email    String  @unique @db.VarChar(100)
+  telefone String? @db.VarChar(15)
+  senha    String  @db.VarChar(200)
 
   criado_em     DateTime @default(now())
   atualizado_em DateTime @updatedAt
 
-  itens         Item[]
+  itens Item[]
 }
 
 model Categoria {
-  id            Int      @id @default(autoincrement())
-  nome          String   @db.VarChar(30)
-  prioridade    Int
+  id         Int    @id @default(autoincrement())
+  nome       String @db.VarChar(30)
+  prioridade Int
 
   criado_em     DateTime @default(now())
   atualizado_em DateTime @updatedAt
 
-  itens         Item[]
+  itens Item[]
 }
 
 model Item {
-  id            Int         @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   usuario_id    Int
   categoria_id  Int
-  nome          String      @db.VarChar(50)
+  nome          String    @db.VarChar(50)
   foto_url      String?
-  data_ocorrido DateTime    @db.Timestamp
-  data_entregue DateTime?   @db.Timestamp
-  email         String?     @db.VarChar(100)
-  telefone      String?     @db.VarChar(15)
-  estado        String      @db.VarChar(30)
-  cidade        String      @db.VarChar(30)
-  bairro        String      @db.VarChar(30)
-  logradouro    String      @db.VarChar(100)
+  data_ocorrido DateTime  @db.Timestamp
+  data_entregue DateTime? @db.Timestamp
+  email         String?   @db.VarChar(100)
+  telefone      String?   @db.VarChar(15)
+  estado        String    @db.VarChar(30)
+  cidade        String    @db.VarChar(30)
+  bairro        String    @db.VarChar(30)
+  logradouro    String    @db.VarChar(100)
   numero        Int?
-  status        String      @db.VarChar(10)
+  status        String    @db.VarChar(10)
 
-  criado_em     DateTime    @default(now())
-  atualizado_em DateTime    @updatedAt
+  criado_em     DateTime @default(now())
+  atualizado_em DateTime @updatedAt
 
-  usuario       Usuario     @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categoria     Categoria   @relation(fields: [categoria_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  usuario   Usuario   @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoria Categoria @relation(fields: [categoria_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

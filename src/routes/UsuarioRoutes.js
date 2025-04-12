@@ -12,4 +12,6 @@ usuarioRouter.delete(
   usuarioController.deletarUsuario
 );
 
+usuarioRouter.put("/usuario/editar", authMiddleware, usuarioController.atualizarUsuario);
+
 export default usuarioRouter;
