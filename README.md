@@ -40,9 +40,13 @@ Objetos perdidos em locais públicos — como escolas, parques e centros comunit
 
 Este documento descreve as variáveis de ambiente que precisam ser configuradas no arquivo `.env` para a correta execução da aplicação.
 
-## No arquivo `.env`, configurar:
+## 🗄️ No arquivo `.env`, configurar:
 
-### Banco de dados:
+
+### 📌 Banco de dados:
+
+# Define a URL base da aplicação.
+# Por padrão, a aplicação roda localmente na porta 3000
 
 - `DATABASE_URL`**: Endereço completo para conexão com o banco de dados PostgreSQL. Inclui informações como protocolo, usuário, senha, host, porta e nome do banco de dados. Use `localhost` caso o banco de dados esteja rodando localmente.
     - **Exemplo:** `postgres://postgres:mysecretpassword@localhost:5432/bootcamp_trabalho`
@@ -53,18 +57,17 @@ Este documento descreve as variáveis de ambiente que precisam ser configuradas 
         - `DB_DATABASE`**: `bootcamp_trabalho`
         - `DB_PORT`**: `5432` (O padrão para PostgreSQL é 5432)
 
-### Autenticação:
+### 📌 Autenticação:
 
 - **`PRIVATE_KEY`**: Chave secreta usada para assinar tokens de autenticação (como JWT). Deve ser mantida em sigilo para garantir a segurança da aplicação.
     - **Exemplo:** `keymuitograndeblablablabla` (Esta é apenas uma amostra, a sua chave será diferente)
 - **`EXPIRES_IN`**: Tempo de expiração dos tokens de autenticação. O valor `"5h"` indica que os tokens terão uma validade de 5 horas.
     - **Exemplo:** `5h`
 
-## Observações:
+## 📌 Observações:
 
 - Certifique-se de criar um arquivo chamado `.env` na raiz do seu projeto.
 - Copie o conteúdo acima para o seu arquivo `.env` e substitua os valores de exemplo pelas suas configurações reais.
-- É altamente recomendado adicionar o arquivo `.env` ao seu `.gitignore` para evitar que informações sensíveis sejam versionadas no seu sistema de controle de versão.
 
 ## SQUAD
 
