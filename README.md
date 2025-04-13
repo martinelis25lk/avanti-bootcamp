@@ -1,80 +1,100 @@
 # 🔍 Sistema Comunitário de Achados e Perdidos
 
-Objetos perdidos em locais públicos — como escolas, parques e centros comunitários — frequentemente não são recuperados por falta de um sistema que facilite o contato entre quem perdeu e quem encontrou. Com isso em mente, este projeto apresenta uma solução acessível: uma aplicação web simples que permite registrar e procurar itens perdidos ou encontrados, promovendo a colaboração entre os usuários.
+Objetos perdidos em locais públicos — como escolas, parques e centros comunitários — frequentemente não são recuperados por falta de um sistema que facilite o contato entre quem perdeu e quem encontrou. Com isso em mente, este projeto apresenta uma solução acessível: uma aplicação simples que permite registrar e procurar itens perdidos ou encontrados, promovendo a colaboração entre os usuários.
 
-## Funcionalidades
+## 💻 Funcionalidades
 
-### 📌 Cadastro de Usuário
-- Nome
-- Email
-- Telefone
-- Senha (criptografada com bcrypt)
+### 📌 Login:
+- E-mail e senha;
+- Autenticação via JWT;
+- Geração de token para acesso a rotas protegidas.
 
-### 📌 Login
-- Autenticação via JWT
-- Geração de token para acesso a rotas protegidas
+### 📌 CRUD de Usuários:
+- Nome;
+- Email;
+- Telefone;
+- Senha (criptografada com bcrypt).
 
-### 📌 Cadastro de Itens
-- **Descrição do objeto**: Uma identificação rápida (ex: "Carteira preta com zíper").
-- **Categoria**: Tipo do item (documentos, roupas, eletrônicos, etc.).
-- **Data**: Quando o item foi perdido ou encontrado.
-- **Local**: Onde foi visto ou deixado pela última vez.
-- **Contato**: Informações de quem está cadastrando (e-mail ou telefone).
-- **Foto (opcional)**: Imagem para facilitar o reconhecimento.
-- **Status**: Define se o item está como *perdido* ou *encontrado*.
+### 📌 Categorias:
+- Nome;
+- Prioridade.
 
-### 🔍 Pesquisa e Consulta
-- Lista de todos os objetos registrados.
-- Filtros por categoria, localização e status.
-- Campo de busca por palavras-chave.
+### 📌 CRUD de Itens:
+- Nome;
+- Foto do item;
+- Categoria;
+- Data do ocorrido (quando o item foi perdido ou encontrado);
+- Data da entrega (quando o item foi entregue ao seu proprietário);
+- Local do ocorrido (estado, cidade, bairro, logradouro e número);
+- Contato (e-mail ou telefone);
+- Status (se foi um item perdido ou encontrado);
 
-## 💻 Tecnologias Utilizadas
+### 📌 Buscas e Consultas
+- Consulta de todos os itens registrados;
+- Consulta de itens registrados pelo usuário autenticado;
+- Busca de itens por palavras-chave.
 
-### Backend:
-- **Node.js + Express**: Estrutura para criação da API.
-- **Prisma ORM**: Acesso e manipulação dos dados no banco.
+## 🌐 Tecnologias Utilizadas
+
+### 📌 Backend:
+- **Node.js + Express**: Estrutura para criação da API;
+- **Prisma ORM**: Acesso e manipulação dos dados no banco;
 - **PostgreSQL**: Banco de dados relacional.
-- **CRUD completo**: Operações para registrar, consultar, editar e excluir itens.
+- **Swagger**: Documentação da API. Para visualizar a documentação das rotas basta acessar **http://localhost:3000/api-docs/**.
 
-# Configuração do Arquivo `.env`
+## ⚙️ Configuração e Execução do Back-end
 
-Este documento descreve as variáveis de ambiente que precisam ser configuradas no arquivo `.env` para a correta execução da aplicação.
+Aqui são apresentadas as configurações do arquivo `.env` a ser criado, além da instalação e execução do projeto.
 
-## 🗄️ No arquivo `.env`, configurar:
+### 📌 .env:
 
-<div align="center" >
-<img src="https://github.com/user-attachments/assets/7ba07b32-49a2-46a6-a538-8eb27a32a2d8" width="700px"/>
-</div>
+Este arquivo descreve as variáveis de ambiente que precisam ser configuradas no arquivo para a correta execução da aplicação. Após criar o arquivo `.env` na raiz do projeto, configurar:
 
+- **DATABASE_URL**: Endereço completo para conexão com o banco de dados PostgreSQL. Inclui informações como protocolo, usuário, senha, host, porta e nome do banco de dados:
+  -  **usuario**: usuário do banco de dados;
+  -  **senha**: senha do banco de dados;
+  -  **host**: endereço do banco de dados;
+  -  **porta**: porta do banco de dados;
+  -  **banco**: nome do banco de dados.
+- **PRIVATE_KEY**: chave secreta usada para assinar tokens JWT. Deve ser mantida em sigilo para garantir a segurança da aplicação. Pode ser alterada para maior segurança;
+- **EXPIRES_IN**: tempo de expiração dos tokens de autenticação. Neste caso, o valor `"5h"` indica que os tokens terão uma validade de 5 horas.
+- **APP_URL**: url onde a aplicação será executada. Neste caso, o valor `"http://localhost:3000"` indica que ela será executada localmente na porta 3000.
 
-### 📌 Banco de dados:
+```env
+  DATABASE_URL="postgres://usuario:senha@host:porta/banco"
+  
+  PRIVATE_KEY="secret"
+  EXPIRES_IN="5h"
 
-- **Define a URL base da aplicação.**
-- **Por padrão, a aplicação roda localmente na porta 3000.**
+  APP_URL="http://localhost:3000"
+```
 
-- `DATABASE_URL`**: Endereço completo para conexão com o banco de dados PostgreSQL. Inclui informações como protocolo, usuário, senha, host, porta e nome do banco de dados. Use `localhost` caso o banco de dados esteja rodando localmente.
-    - **Exemplo:** `postgres://postgres:mysecretpassword@localhost:5432/bootcamp_trabalho`
-    - **Componentes (extraídos do exemplo):**
-        - `DB_HOST`**: `localhost`
-        - `DB_USER`**: `postgres`
-        - `DB_PASSWORD`**: `mysecretpassword` (Substitua pela sua senha correta)
-        - `DB_DATABASE`**: `bootcamp_trabalho`
-        - `DB_PORT`**: `5432` (O padrão para PostgreSQL é 5432)
+### 📌 Instalar dependências:
 
-### 📌 Autenticação:
+Executar o comando abaixo.
 
-- **`PRIVATE_KEY`**: Chave secreta usada para assinar tokens de autenticação (como JWT). Deve ser mantida em sigilo para garantir a segurança da aplicação.
-    - **Exemplo:** `keymuitograndeblablablabla` (Esta é apenas uma amostra, a sua chave será diferente)
-- **`EXPIRES_IN`**: Tempo de expiração dos tokens de autenticação. O valor `"5h"` indica que os tokens terão uma validade de 5 horas.
-    - **Exemplo:** `5h`
+```sh
+npm install
+```
 
+### 📌 Configurar o banco de dados:
 
-## 📌 Observações:
+Executar os comandos abaixo, um por um.
 
-- Certifique-se de criar um arquivo chamado `.env` na raiz do seu projeto.
-- Copie o conteúdo acima para o seu arquivo `.env` e substitua os valores de exemplo pelas suas configurações reais.
+```sh
+npx prisma migrate dev
+node prisma/seed.js
+```
 
-## SQUAD
+### 📌 Rodar a aplicação:
+
+Executar o comando abaixo:
+
+```sh
+npm run dev
+```
+
+## 🤝 SQUAD
 
   <table>
   <tr>
