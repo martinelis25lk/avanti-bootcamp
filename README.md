@@ -83,7 +83,7 @@ Executar os comandos abaixo, um por um.
 
 ```sh
 npx prisma migrate dev
-node prisma/seed.js
+npx prisma db seed
 ```
 
 ### 📌 Rodar a aplicação:
