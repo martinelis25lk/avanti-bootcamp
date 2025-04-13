@@ -24,12 +24,12 @@ Objetos perdidos em locais públicos — como escolas, parques e centros comunit
 - Foto do item;
 - Categoria;
 - Data do ocorrido (quando o item foi perdido ou encontrado);
-- Data da entrega (quando o item foi entregue ao seu proprietário);
 - Local do ocorrido (estado, cidade, bairro, logradouro e número);
+- Data da entrega (quando o item foi entregue ao seu proprietário);
 - Contato (e-mail ou telefone);
 - Status (se foi um item perdido ou encontrado);
 
-### 📌 Buscas e Consultas
+### 📌 Buscas e Consultas:
 - Consulta de todos os itens registrados;
 - Consulta de itens registrados pelo usuário autenticado;
 - Busca de itens por palavras-chave.
@@ -37,14 +37,14 @@ Objetos perdidos em locais públicos — como escolas, parques e centros comunit
 ## 🌐 Tecnologias Utilizadas
 
 ### 📌 Backend:
-- **Node.js + Express**: Estrutura para criação da API;
-- **Prisma ORM**: Acesso e manipulação dos dados no banco;
-- **PostgreSQL**: Banco de dados relacional.
-- **Swagger**: Documentação da API. Para visualizar a documentação das rotas basta acessar **http://localhost:3000/api-docs/**.
+- **Node.js + Express**: estrutura para criação da API;
+- **Prisma ORM**: acesso e manipulação dos dados no banco;
+- **PostgreSQL**: banco de dados relacional;
+- **Swagger**: documentação da API. Para visualizar a documentação das rotas basta acessar **http://localhost:3000/api-docs/**.
 
 ## ⚙️ Configuração e Execução do Back-end
 
-Aqui são apresentadas as configurações do arquivo `.env` a ser criado, além da instalação e execução do projeto.
+Aqui são apresentadas as configurações do arquivo `.env` a ser criado, a configuração do banco de dados, além da instalação e execução do projeto.
 
 ### 📌 .env:
 
