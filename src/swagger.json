@@ -7,13 +7,17 @@
   "paths": {
     "/auth/login": {
       "post":{
-        "summary": "Rota para a realização do login",
+        "summary": "Realiza a autenticação do usuário",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginRequestBody"
+              },
+              "example": {
+                "email": "Jhondoe@exemplo.com",
+                "senha": "Senha#supersegura1234"
               }
             }
           }
@@ -25,6 +29,15 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UsuarioComToken"
+                },
+                "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjgsImlhdCI6MTc0NDQ2NjY4MywiZXhwIjoxNzQ0NDg0NjgzfQ.RXqs5G8r_0LXfrUsBbdphDFaUK-m-rZHh0WCxkEF0Ic",
+                    "usuario": {
+                      "id": 1,
+                      "nome": "Jhon Doe",
+                      "telefone": "(88) 99999-9999",
+                      "email": "Jhondoe@exemplo.com"
+                    }
                 }
               }
             }
@@ -35,6 +48,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -45,6 +61,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Email ou senha inválidos."
                 }
               }
             }
@@ -62,6 +81,13 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UsuarioParaCadastro"
+              },
+              "example": {
+                "nome": "Jhon Doe",
+                "email": "Jhondoe@exemplo.com",
+                "telefone": "(88) 99999-9999",
+                "senha": "Senha#supersegura1234",
+                "confirmarSenha": "Senha#supersegura1234"
               }
             }
           }
@@ -73,6 +99,15 @@
               "aplication/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UsuarioComToken"
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjgsImlhdCI6MTc0NDQ2NjY4MywiZXhwIjoxNzQ0NDg0NjgzfQ.RXqs5G8r_0LXfrUsBbdphDFaUK-m-rZHh0WCxkEF0Ic",
+                  "usuario": {
+                    "id": 8,
+                    "nome": "Jhon Doe",
+                    "telefone": "(88) 99999-9999",
+                    "email": "Jhondoe@exemplo.com"
+                  }
                 }
               }
             }
@@ -83,7 +118,11 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
+
               }
             }
           },
@@ -93,16 +132,35 @@
               "aplication/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Já existe uma conta com o email informado."
                 }
               }
             }
           },
           "400": {
-            "description": "A requisição foi realizada com campos faltando ou mal formatados no body",
+            "description": "O corpo da requisição possui campos faltando ou mal formatados",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseErrosDeCampos"
+                },
+                "example": {
+                  "erros": [
+                    {
+                      "campo": "email",
+                      "mensagem": "O 'email' fornecido é inválido."
+                    },
+                    {
+                      "campo": "senha",
+                      "mensagem": "O 'senha' é obrigatório."
+                    },
+                    {
+                      "campo": "confirmarSenha",
+                      "mensagem": "O 'confirmarSenha' deve ser igual ao 'senha'."
+                    }
+                  ]
                 }
               }
             }
@@ -126,6 +184,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -136,6 +197,27 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "examples": {
+                  "exemplo1": {
+                    "description": "Erro quando o token é inválido",
+                    "value": {
+                      "erro": "Token inválido."
+                    }
+                  },
+                  "exemplo2": {
+                    "description": "Erro quando o id não foi fornecido",
+                    "value": {
+                      "erro": "usuarioId não foi informado."
+                    }
+                  },
+                  "exemplo3": {
+                    "description": "Erro quando o id não está vinculado a um usuário",
+                    "value": {
+                      "erro": "O usuário com id 1 não foi encontrado."
+                    }
+                  }
+
                 }
               }
             }
@@ -154,6 +236,12 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UsuarioParaEdicao"
+              },
+              "example": {
+                "nome": "Jhon Doe",
+                "telefone": "(88) 99999-9999",
+                "senha": "Senha#supermaissegura1234",
+                "confirmarSenha": "Senha#supermaissegura1234"
               }
             }
           }
@@ -165,6 +253,14 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UsuarioSemSenha"
+                },
+                "example": {
+                  "id": 8,
+                  "nome": "Jhon Does",
+                  "email": "Jhondoe@exemplo.com",
+                  "telefone": "(88) 88888-9999",
+                  "criado_em": "2025-04-12T14:04:43.280Z",
+                  "atualizadoem": "2025-04-12T23:10:17.048Z"
                 }
               }
             }
@@ -175,6 +271,18 @@
               "application/json 1": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseErrosDeCampos"
+                },
+                "example": {
+                  "erros": [
+                    {
+                      "campo": "nome",
+                      "mensagem": "O 'nome' é obrigatório."
+                    },
+                    {
+                      "campo": "confirmarSenha",
+                      "mensagem": "O 'confirmarSenha' deve ser igual ao 'senha'."
+                    }
+                  ]
                 }
               }
             }
@@ -185,6 +293,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -195,6 +306,27 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "examples": {
+                  "exemplo1": {
+                    "description": "Erro quando o token é inválido",
+                    "value": {
+                      "erro": "Token inválido."
+                    }
+                  },
+                  "exemplo2": {
+                    "description": "Erro quando o id não foi fornecido",
+                    "value": {
+                      "erro": "usuarioId não foi informado."
+                    }
+                  },
+                  "exemplo3": {
+                    "description": "Erro quando o id não está vinculado a um usuário",
+                    "value": {
+                      "erro": "O usuário com id 1 não foi encontrado."
+                    }
+                  }
+
                 }
               }
             }
@@ -219,6 +351,75 @@
                   "items": {
                     "$ref": "#/components/schemas/Categoria"
                   }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": [
+                              {
+                                "id": 7,
+                                "nome": "Câmera",
+                                "prioridade": 2,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              },
+                              {
+                                "id": 6,
+                                "nome": "Celular",
+                                "prioridade": 3,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              },
+                              {
+                                "id": 2,
+                                "nome": "Documento",
+                                "prioridade": 2,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              },
+                              {
+                                "id": 5,
+                                "nome": "Eletrônico",
+                                "prioridade": 1,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              },
+                              {
+                                "id": 8,
+                                "nome": "Notebook",
+                                "prioridade": 3,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              },
+                              {
+                                "id": 1,
+                                "nome": "Outro",
+                                "prioridade": 1,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              },
+                              {
+                                "id": 3,
+                                "nome": "Relógio",
+                                "prioridade": 1,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              },
+                              {
+                                "id": 4,
+                                "nome": "Roupa",
+                                "prioridade": 1,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              },
+                              {
+                                "id": 9,
+                                "nome": "Tablet",
+                                "prioridade": 3,
+                                "criado_em": "2025-04-09T23:41:14.223Z",
+                                "atualizado_em": "2025-04-09T23:41:14.223Z"
+                              }
+                            ]
+                  }
                 }
               }
             }
@@ -229,6 +430,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -239,6 +443,9 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Token inválido."
                 }
               }
             }
@@ -251,6 +458,58 @@
     "/item" : {
       "get": {
         "summary": "Listagem dos itens",
+        "parameters": [
+                        {
+                          "in": "query",
+                          "name": "categoria",
+                          "schema": {
+                            "type": "integer"
+                          },
+                          "required": false
+                        },
+                        {
+                          "in": "query",
+                          "name": "cidade",
+                          "schema": {
+                            "type": "string"
+                          },
+                          "required": false
+                        },
+                        {
+                          "in": "query",
+                          "name": "status",
+                          "schema": {
+                            "type": "string"
+                          },
+                          "required": false
+                        },
+                        {
+                          "in": "query",
+                          "name": "data_inicio",
+                          "schema": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "required": false
+                        },
+                        {
+                          "in": "query",
+                          "name": "data_fim",
+                          "schema": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "required": false
+                        },
+                        {
+                          "in": "query",
+                          "name": "nome",
+                          "schema": {
+                            "type": "string"
+                          },
+                          "required": false
+                        }
+                      ],
         "security": [
           {"bearerAuth": []}
         ],
@@ -264,6 +523,64 @@
                   "items": {
                     "$ref": "#/components/schemas/Item"
                   }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": [
+                                {
+                                  "id": 8,
+                                  "usuario_id": 1,
+                                  "categoria_id": 5,
+                                  "nome": "fone de ouvido",
+                                  "foto_url": null,
+                                  "data_ocorrido": "2025-10-11T01:30:00.000Z",
+                                  "data_entregue": null,
+                                  "email": "jhondoe@gmail.com",
+                                  "telefone": "(88) 99206-4599",
+                                  "estado": "Ceará",
+                                  "cidade": "Tianguá",
+                                  "bairro": "Santo Antonio",
+                                  "logradouro": "Rua Mosa Albuquerque",
+                                  "numero": null,
+                                  "status": "Perdido",
+                                  "criado_em": "2025-04-11T00:12:46.765Z",
+                                  "atualizado_em": "2025-04-11T00:12:46.765Z",
+                                  "categoria": {
+                                    "id": 5,
+		                                "nome": "Eletrônico",
+                                    "prioridade": 1,
+                                    "criado_em": "2025-04-09T23:41:14.223Z",
+                                    "atualizado_em": "2025-04-09T23:41:14.223Z"
+                                  }
+                                },
+                                {
+                                  "id": 7,
+                                  "usuario_id": 1,
+                                  "categoria_id": 2,
+                                  "nome": "Carteira",
+                                  "foto_url": null,
+                                  "data_ocorrido": "2025-09-11T01:30:00.000Z",
+                                  "data_entregue": null,
+                                  "email": "jhondoe@gmail.com",
+                                  "telefone": "(88) 99206-4599",
+                                  "estado": "Ceará",
+                                  "cidade": "Tianguá",
+                                  "bairro": "Santo Antonio",
+                                  "logradouro": "Tadeu Melo",
+                                  "numero": null,
+                                  "status": "Encontrado",
+                                  "criado_em": "2025-04-11T00:05:10.991Z",
+                                  "atualizado_em": "2025-04-11T00:05:10.991Z",
+                                  "categoria": {
+                                    "id": 2,
+                                    "nome": "Documento",
+                                    "prioridade": 2,
+                                    "criado_em": "2025-04-09T23:41:14.223Z",
+                                    "atualizado_em": "2025-04-09T23:41:14.223Z"
+                                  }
+                                }
+                              ]
+                  }
                 }
               }
             }
@@ -274,6 +591,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -284,6 +604,9 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Token inválido."
                 }
               }
             }
@@ -302,6 +625,18 @@
             "application/json":{
               "schema":{
                 "$ref": "#/components/schemas/ItemParaCriacao"
+              },
+              "example": {
+                "nome": "fone de ouvido",
+                "data_ocorrido": "2025-05-13 13:00",
+                "email": "jhondoe@gmail.com",
+                "telefone": "(88) 99206-4599",
+                "estado": "Ceará",
+                "cidade": "Fortaleza",
+                "bairro": "Santo Antonio",
+                "logradouro": "Rua Sargento Evaldo",
+                "status": "Encontrado",
+                "categoria_id": 1
               }
             }
           }
@@ -313,6 +648,25 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Item"
+                },
+                "example": {
+                  "id": 1,
+                  "usuario_id": 1,
+                  "categoria_id": 1,
+                  "nome": "fone de ouvido",
+                  "foto_url": null,
+                  "data_ocorrido": "2025-05-13T16:00:00.000Z",
+                  "data_entregue": null,
+                  "email": "jhondoe@gmail.com",
+                  "telefone": "(88) 99206-4599",
+                  "estado": "Ceará",
+                  "cidade": "Fortaleza",
+                  "bairro": "Santo Antonio",
+                  "logradouro": "Rua Sargento Evaldo",
+                  "numero": null,
+                  "status": "Encontrado",
+                  "criado_em": "2025-04-12T00:38:52.261Z",
+                  "atualizado_em": "2025-04-12T00:38:52.261Z"
                 }
               }
             }
@@ -323,6 +677,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -333,6 +690,9 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Token inválido."
                 }
               }
             }
@@ -343,6 +703,22 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseErrosDeCampos"
+                },
+                "example": {
+                  	"erros": [
+                      {
+                        "campo": "email",
+                        "mensagem": "O 'email' fornecido é inválido."
+                      },
+                      {
+                        "campo": "telefone",
+                        "mensagem": "O 'telefone' fornecido é inválido. Insira no formato (xx) xxxxx-xxxx."
+                      },
+                      {
+                        "campo": "cidade",
+                        "mensagem": "O 'cidade' é obrigatório."
+                      }
+                    ]
                 }
               }
             }
@@ -367,6 +743,64 @@
                   "items": {
                     "$ref": "#/components/schemas/Item"
                   }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": [
+                                {
+                                  "id": 8,
+                                  "usuario_id": 1,
+                                  "categoria_id": 5,
+                                  "nome": "fone de ouvido",
+                                  "foto_url": null,
+                                  "data_ocorrido": "2025-10-11T01:30:00.000Z",
+                                  "data_entregue": null,
+                                  "email": "jhondoe@gmail.com",
+                                  "telefone": "(88) 99206-4599",
+                                  "estado": "Ceará",
+                                  "cidade": "Tianguá",
+                                  "bairro": "Santo Antonio",
+                                  "logradouro": "Rua Mosa Albuquerque",
+                                  "numero": null,
+                                  "status": "Perdido",
+                                  "criado_em": "2025-04-11T00:12:46.765Z",
+                                  "atualizado_em": "2025-04-11T00:12:46.765Z",
+                                  "categoria": {
+                                    "id": 5,
+		                                "nome": "Eletrônico",
+                                    "prioridade": 1,
+                                    "criado_em": "2025-04-09T23:41:14.223Z",
+                                    "atualizado_em": "2025-04-09T23:41:14.223Z"
+                                  }
+                                },
+                                {
+                                  "id": 7,
+                                  "usuario_id": 1,
+                                  "categoria_id": 2,
+                                  "nome": "Carteira",
+                                  "foto_url": null,
+                                  "data_ocorrido": "2025-09-11T01:30:00.000Z",
+                                  "data_entregue": null,
+                                  "email": "jhondoe@gmail.com",
+                                  "telefone": "(88) 99206-4599",
+                                  "estado": "Ceará",
+                                  "cidade": "Tianguá",
+                                  "bairro": "Santo Antonio",
+                                  "logradouro": "Tadeu Melo",
+                                  "numero": null,
+                                  "status": "Encontrado",
+                                  "criado_em": "2025-04-11T00:05:10.991Z",
+                                  "atualizado_em": "2025-04-11T00:05:10.991Z",
+                                  "categoria": {
+                                    "id": 2,
+                                    "nome": "Documento",
+                                    "prioridade": 2,
+                                    "criado_em": "2025-04-09T23:41:14.223Z",
+                                    "atualizado_em": "2025-04-09T23:41:14.223Z"
+                                  }
+                                }
+                              ]
+                  }
                 }
               }
             }
@@ -377,6 +811,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -387,6 +824,9 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Token inválido."
                 }
               }
             }
@@ -422,6 +862,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "examples": {
+                  "exemplo1": {
+                    "description": "Não existe um item com o id informado",
+                    "value": {
+                      "erro": "O item com id 6 não foi encontrado."
+                    }
+                  },
+                  "exemplo2": {
+                    "description": "O id não foi passado",
+                    "value": {
+                      "erro": "O itemId não foi informado."
+                    }
+                  }
                 }
               }
             }
@@ -432,6 +886,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -442,6 +899,9 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Token inválido."
                 }
               }
             }
@@ -506,6 +966,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -516,6 +979,9 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Token inválido."
                 }
               }
             }
@@ -580,6 +1046,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -590,6 +1059,9 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Token inválido."
                 }
               }
             }
@@ -653,6 +1125,9 @@
               "application/json": {
                 "schema": {
                    "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Ocorreu um erro interno no servidor."
                 }
               }
             }
@@ -663,6 +1138,9 @@
               "application/json":{
                 "schema":{
                   "$ref": "#/components/schemas/ResponseErro"
+                },
+                "example": {
+                  "erro": "Token inválido."
                 }
               }
             }
