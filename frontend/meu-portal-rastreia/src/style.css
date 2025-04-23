@@ -1,0 +1,236 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #2E8B57;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    background-color: #fff; 
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    margin: auto;
+}
+
+.left-panel {
+    width: 50%;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 100%;
+}
+
+.left-image-panel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+.left-image-panel img {
+    display: block;
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(46, 139, 87, 0.5);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-text {
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    max-width: 90%;
+}
+
+.title-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.title-logo-container h1 {
+    margin: 0 0 5px 0;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.title-logo-container .logo {
+    height: 60px; 
+    width: auto;
+    margin: 5px auto;
+}
+
+.overlay-text h2 {
+    margin-top: 5px;
+    font-size: 1.5em;
+    color: #fff; 
+}
+
+.overlay-text p {
+    margin-top: 0;
+    line-height: 1.6;
+    font-size: 1.1em;
+}
+
+
+/* Painel direito */
+.right-panel {
+    flex-grow: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #146152; 
+}
+
+
+.cadastro-wrapper {
+    background-color: white; 
+    border-radius: 10px;
+    padding: 30px 25px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cadastro-box {
+    width: 100%;
+    text-align: center;
+}
+
+.cadastro-box h2 {
+    color: #146152;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #146152;
+    font-weight: bold;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="tel"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+}
+
+.btn-cadastrar {
+    background-color: #2E8B57;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cadastrar:hover {
+    background-color: #207a49;
+}
+
+.login-link {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.login-link a {
+    color: #2E8B57;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .left-panel {
+        width: 100%;
+        min-height: 250px;
+    }
+
+    .left-image-panel {
+        height: 250px;
+    }
+
+    .right-panel {
+        width: 100%;
+        padding: 20px;
+        height: auto;
+    }
+
+    .cadastro-wrapper {
+        width: 95%;
+        margin: auto;
+    }
+
+    
+     .title-logo-container h1 {
+        font-size: 2em;
+    }
+
+    .overlay-text h2 {
+        font-size: 1.2em;
+    }
+
+    .overlay-text p {
+        font-size: 1em;
+    }
+
+   
+    .title-logo-container .logo {
+        height: 35px;
+    }
+}
