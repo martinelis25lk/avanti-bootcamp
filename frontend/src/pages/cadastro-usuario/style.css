@@ -64,6 +64,24 @@
   font-weight: bold;
 }
 
+.senha-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.senha-container input {
+  width: 90%;
+  height: 100%;
+  font-size: 1.2rem;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.senha-container svg:hover{
+  cursor: pointer;
+}
+
 .btn-cadastrar {
   padding: 12px 20px;
   border: none;

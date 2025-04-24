@@ -2,16 +2,29 @@ import "./style.css"
 import { Banner } from "../../components/Banner";
 import { useForm } from "react-hook-form";
 import { cadastrarUsuario } from "../../services/apiService";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 export function CadastroUsuario() {
   const { register, handleSubmit, formState: { errors }, watch} = useForm();
+  const [cmfSenhaVisivel, setCmfSenhaVisivel] = useState(false);
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [responseError, setResponseError] = useState("");
+  const {sign, isAuthenticated} = useContext(AuthContext);
+  const navigate = useNavigate();
   const senha = watch("senha");
+
+  if(isAuthenticated)
+      navigate("/cadastrar-item")
 
   const onSubmit = async (data) => {
     try {
       const user = await cadastrarUsuario(data)
+      sign(user)
+      navigate("/cadastrar-item")
+
     } catch (error) {
       console.log(error.status == 409)
       if(error.status == 409){
@@ -21,7 +34,13 @@ export function CadastroUsuario() {
     }
   };
 
+  const handleCfmSenhaVisibilidade = () => {
+    setCmfSenhaVisivel(prev => !prev)
+  }
 
+  const handleSenhaVisibilidade = () => {
+    setSenhaVisivel(prev => !prev)
+  }
   return (
     <div className="cadastro-container">
       <Banner/>
@@ -37,8 +56,14 @@ export function CadastroUsuario() {
                   type="text"
                   id="nome-completo"
                   name="nome-completo"
+                  placeholder="Digite seu nome"
                   className={errors.nome ? "input-erro" : "input"}
-                  {...register("nome", {required: "O nome é obrigatório"})}
+                  {...register("nome", {
+                    required: "O nome é obrigatório",
+                    minLength: {
+                      value: 8,
+                      message: "O nome precisa ter pelo menos 8 caracteres"
+                    }})}
                 />
                 {errors.nome && <p className="error">{errors.nome.message}</p>}
               </div>
@@ -49,6 +74,7 @@ export function CadastroUsuario() {
                   type="tel"
                   id="telefone"
                   name="telefone"
+                  placeholder="(00) 00000-0000"
                   className={errors.telefone ? "input-erro" : "input"}
                   {...register("telefone", {
                     required: "O telefone é obrigatório",
@@ -67,6 +93,7 @@ export function CadastroUsuario() {
                   type="email"
                   id="email"
                   name="email"
+                  placeholder="exemplo@email.com"
                   className={errors.email? "input-erro" : "input"}
                   {...register("email", {
                     required: "O campo email é obrigatório",
@@ -81,28 +108,48 @@ export function CadastroUsuario() {
 
               <div className="input-group">
                 <label htmlFor="senha">Senha</label>
-                <input
-                  type="password"
-                  className={errors.senha ? "input-erro" : "input"}
-                  id="senha"
-                  name="senha"
-                  {...register("senha", {required: "A senha é obrigatória"})}
-                />
+                <div className={errors.senha ? "senha-container input-erro" : "senha-container input"}>
+                  <input
+                    type={senhaVisivel ? "text" : "password"}
+                    id="senha"
+                    name="senha"
+                    placeholder="informe a sua senha"
+                    {...register("senha", {required: "A senha é obrigatória"})}
+                  />
+
+                  {
+                    senhaVisivel
+                    ?
+                    <FaRegEyeSlash size={24} onClick={handleSenhaVisibilidade}/>
+                    :
+                    <FaRegEye size={24} onClick={handleSenhaVisibilidade}/>
+                  }
+                </div>
                 {errors.senha && <p className="error">{errors.senha.message}</p>}
               </div>
 
               <div className="input-group">
                 <label htmlFor="confirmar-senha">Confirmar senha</label>
-                <input
-                  type="password"
-                  id="confirmar-senha"
-                  name="confirmar-senha"
-                  className={errors.confirmarSenha ? "input-erro" : "input"}
-                  {...register("confirmarSenha", {
-                    required: "Confirme a senha",
-                    validate: value => value === senha || "As senhas não coincidem"
-                  })}
-                />
+                <div className={errors.confirmarSenha ? "senha-container input-erro" : "senha-container input"}>
+                  <input
+                    type={cmfSenhaVisivel ? "text" : "password"}
+                    id="confirmar-senha"
+                    name="confirmar-senha"
+                    placeholder="confirme a senha passada"
+                    {...register("confirmarSenha", {
+                      required: "Confirme a senha",
+                      validate: value => value === senha || "As senhas não coincidem"
+                    })}
+                  />
+                  {
+                    cmfSenhaVisivel
+                    ?
+                    <FaRegEyeSlash size={24} onClick={handleCfmSenhaVisibilidade}/>
+                    :
+                    <FaRegEye size={24} onClick={handleCfmSenhaVisibilidade}/>
+                  }
+                </div>
+
                 {errors.confirmarSenha && <p className="error">{errors.confirmarSenha.message}</p>}
               </div>
 
