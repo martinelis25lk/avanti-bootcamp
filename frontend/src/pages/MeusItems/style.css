@@ -1,0 +1,150 @@
+/* Tipografia base */
+* {
+  font-family: sans-serif;
+}
+
+.top-bar {
+  background-color: #146152;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilo dos botões na tarja */
+.top-bar-buttons button {
+  background-color: #146152; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.top-bar-buttons button:hover {
+  background-color: #104d40; /* Tom de verde mais escuro */
+  transform: scale(1.05); /* Efeito de aumento suave */
+}
+
+/* Container que envolve todos os itens */
+.items-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  padding: 2rem;
+  background-color: #F8F9FA;
+}
+
+/* Caixa individual de cada item */
+.item-card {
+  width: 250px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  padding-bottom: 60px; /* Adiciona espaço para os botões no rodapé */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; /* Necessário para posicionamento absoluto dos botões */
+  transition: transform 0.2s ease-in-out;
+}
+
+.item-card:hover {
+  transform: scale(1.02);
+}
+
+/* Estilo do cabeçalho do item (nome e status) */
+.item-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #146152;
+}
+
+.item-status {
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.item-status.perdido {
+  background-color: red;
+}
+
+.item-status.encontrado {
+  background-color: #146152;
+}
+
+/* Imagem do item */
+.item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  object-fit: cover;
+}
+
+/* Detalhes do item abaixo da imagem */
+.item-details {
+  font-size: 0.9rem;
+  color: #333;
+  width: 100%;
+}
+
+.item-details p {
+  margin: 5px 0;
+  text-align: left;
+}
+
+.item-details strong {
+  font-weight: bold;
+  color: #146152;
+}
+
+
+.item-actions {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button, .delete-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.edit-button {
+  color: #146152;
+}
+
+.delete-button {
+  color: #c0392b;
+}
+
+.edit-button:hover {
+  color: #0e3d33;
+}
+
+.delete-button:hover {
+  color: #922b21;
+}
