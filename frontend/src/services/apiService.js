@@ -34,6 +34,17 @@ export const cadastrarItem = async (token, itemData) => {
 
 }
 
+export const cadastrarUsuario = async (usuarioData) => {
+  try {
+    const response = await api.post("/usuario", usuarioData);
+    return response.data;
+
+  } catch(error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export const atualizarItem = async (token, id, itemData) => {
   let response
 

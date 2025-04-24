@@ -1,0 +1,31 @@
+.banner-container {
+  height: 100vh;
+  width: 50vw;
+  background: linear-gradient(rgba(20, 97, 82, 0.4), rgba(20, 97, 82, 0.6)), url('banner-background.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 4rem;
+  padding-top: 8rem;
+  color: #F8F9FA;
+  box-sizing: border-box;
+  gap: 2rem;
+}
+
+.banner-container img {
+  height: 220px;
+}
+
+.banner-container p{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+  .banner-container {
+    display: none;
+  }
+}
