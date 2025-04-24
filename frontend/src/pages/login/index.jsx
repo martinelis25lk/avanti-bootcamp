@@ -18,7 +18,7 @@ export function Login () {
     try {
       const response = await login({email, senha});
       sign(response);
-      navigate("/")
+      navigate("/cadastro-item")
 
     } catch (error) {
       setErro("Email ou senha inválidos");
@@ -26,7 +26,7 @@ export function Login () {
   }
 
   if(isAuthenticated){
-    navigate("/")
+    navigate("/cadastro-item")
   }
 
   return (
@@ -58,6 +58,7 @@ export function Login () {
               placeholder="Senha"
               onChange={(e) => setSenha(e.target.value)}
             />
+            <p className="erro">{erro}</p>
             <button onClick={handleLogin}>Entrar</button>
             <p>Não tem conta ?<a> Cadastre-se </a></p>
           </form>

@@ -1,0 +1,32 @@
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 56px;
+  width: 100vw;
+  background-color: #146152;
+  padding: 16px;
+}
+
+nav img {
+  height: 48px;
+}
+
+nav img {
+  cursor: pointer;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  font-weight: bold;
+  color: #FAFAFA;
+}
+
+nav li:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform 0.5s ease-in-out;
+}
