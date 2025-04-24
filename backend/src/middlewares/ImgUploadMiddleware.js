@@ -12,11 +12,9 @@ const storage = multer.diskStorage({
     cb(null, "imagens/");
   },
   filename: (request, file, cb) => {
-    const uniqueName =
-      "item_img_" +
-      Date.now() *
-      parseInt(request.params.id) +
-      path.extname(file.originalname);
+    const imageId = Date.now() * parseInt(request.params.itemId)
+    const ext = path.extname(file.originalname)
+    const uniqueName = `item_img_${imageId}${ext}`
     cb(null, uniqueName);
   },
 });
