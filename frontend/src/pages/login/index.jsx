@@ -3,6 +3,7 @@ import "./style.css"
 import { AuthContext } from "../../context/AuthContext";
 import { login } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
+import { Banner } from "../../components/Banner";
 
 export function Login () {
   const [email, setEmail] = useState("");
@@ -31,14 +32,7 @@ export function Login () {
 
   return (
     <div className="login-container">
-      <div className="banner-wrapper">
-        <img src="./Logo.png" alt="Logo do website"/>
-        <p>
-          Bem-vindo(a) ao nosso espaço dedicado a conectar pessoas que encontraram algo com aqueles que perderam!
-          Somos uma plataforma voluntária criada para facilitar a busca por itens perdidos e a devolução de objetos
-          encontrados.
-        </p>
-      </div>
+      <Banner/>
       <div className="form-wrapper">
         <img src="./Logo.png" alt="Logo do website"/>
         <div className="form-container">
@@ -58,8 +52,9 @@ export function Login () {
               placeholder="Senha"
               onChange={(e) => setSenha(e.target.value)}
             />
+            <p className="erro">{erro}</p>
             <button onClick={handleLogin}>Entrar</button>
-            <p>Não tem conta ?<a> Cadastre-se </a></p>
+            <p>Não tem conta ?<a href="/cadastrar-usuario"> Cadastre-se </a></p>
           </form>
         </div>
       </div>

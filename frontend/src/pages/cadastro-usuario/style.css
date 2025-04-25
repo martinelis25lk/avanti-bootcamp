@@ -1,0 +1,150 @@
+.cadastro-container {
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  background-color: #146152;
+}
+
+.cadastro-wrapper {
+  box-sizing: border-box;
+  width: 50vw;
+  height: 100vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cadastro-wrapper img {
+  max-height: 220px;
+  height: 20%;
+  display: none;
+}
+
+.cadastro-box {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 70%;
+  min-height: 860px;
+  max-height: 960px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.cadastro-box form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.cadastro-box h1 {
+  color: #146152;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  width: 80%;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #146152;
+  font-weight: bold;
+}
+
+.senha-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.senha-container input {
+  width: 90%;
+  height: 100%;
+  font-size: 1.2rem;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.senha-container svg:hover{
+  cursor: pointer;
+}
+
+.btn-cadastrar {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: bold;
+  border: none;
+  background-color: #146152;
+  color: #F8F9FA;
+}
+
+.btn-cadastrar:hover {
+  background-color: #104d40;
+}
+
+.login-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.login-link a {
+  color: #2E8B57;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.error {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #AE2012;
+}
+
+.cadastro-error {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #AE2012;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1200px) {
+
+  .cadastro-wrapper {
+    width: 100vw;
+    justify-content: space-around;
+  }
+
+  .cadastro-wrapper img{
+    display: block;
+  }
+
+  .cadastro-box {
+    height: 60%;
+  }
+}

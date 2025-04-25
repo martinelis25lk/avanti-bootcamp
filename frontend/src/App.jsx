@@ -1,14 +1,23 @@
 import './App.css'
 import { MeusItens } from "./pages/MeusItems";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login } from "./pages/login";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom"
+import { Login } from "./pages/login"
+import { ItemForm } from "./components/ItemForm"
+import { CadastroUsuario } from "./pages/cadastro-usuario"
+import { Home } from "./pages/home"
+import GerenciarConta from "./pages/gerenciar-usuario"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<MeusItens />} />
+        <Route path="/" element={<Home/>}/>
+        <Route path="/meus-itens" element={<MeusItens />} />
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/cadastrar-usuario" element={<CadastroUsuario/>}/>
+        <Route path="/cadastrar-item" element={<ItemForm isEdit={false}/>}/>
+        <Route path="/atualizar-item/:itemId" element={<ItemForm isEdit={true}/>}/>
+        <Route path="/editar-perfil" element={<GerenciarConta/>}/>
       </Routes>
     </BrowserRouter>
   );
