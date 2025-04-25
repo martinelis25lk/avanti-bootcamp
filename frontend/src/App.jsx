@@ -3,11 +3,13 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom"
 import { Login } from "./pages/login"
 import { ItemForm } from "./components/ItemForm"
 import { CadastroUsuario } from "./pages/cadastro-usuario"
+import { Home } from "./pages/home"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/cadastrar-usuario" element={<CadastroUsuario/>}/>
         <Route path="/cadastrar-item" element={<ItemForm isEdit={false}/>}/>

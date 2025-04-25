@@ -19,7 +19,7 @@ export function Login () {
     try {
       const response = await login({email, senha});
       sign(response);
-      navigate("/cadastrar-item")
+      navigate("/")
 
     } catch (error) {
       setErro("Email ou senha inválidos");
@@ -27,7 +27,7 @@ export function Login () {
   }
 
   if(isAuthenticated){
-    navigate("/cadastrar-item")
+    navigate("/")
   }
 
   return (

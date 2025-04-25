@@ -64,6 +64,21 @@ export const atualizarItem = async (token, id, itemData) => {
 
 }
 
+export const listarCategoria = async (token) => {
+  try {
+    const response = await api.get("/categoria", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error)
+    throw error;
+  }
+}
+
 export const listarItemPorId = async (token, id) => {
   try {
     const response = await api.get(`/item/?id=${id}`, {
@@ -73,6 +88,22 @@ export const listarItemPorId = async (token, id) => {
     })
 
     return response.data[0]
+  } catch (error) {
+    console.error(error);
+    throw error
+  }
+}
+
+export const listarItens = async (token, query) => {
+
+  try{
+    const response = await api.get(`/item${query}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    return response.data
   } catch (error) {
     console.error(error);
     throw error

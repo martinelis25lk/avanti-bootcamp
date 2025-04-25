@@ -17,13 +17,13 @@ export function CadastroUsuario() {
   const senha = watch("senha");
 
   if(isAuthenticated)
-      navigate("/cadastrar-item")
+      navigate("/")
 
   const onSubmit = async (data) => {
     try {
       const user = await cadastrarUsuario(data)
       sign(user)
-      navigate("/cadastrar-item")
+      navigate("/")
 
     } catch (error) {
       console.log(error.status == 409)
