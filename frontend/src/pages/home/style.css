@@ -94,12 +94,17 @@
   border: solid 1px #F8F9FA;
   width: 100%;
 }
+.input-group2 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px
+}
 
-.input-group label{
+.input-group2 label{
   color: #F8F9FA;
 }
 
-.input-group select {
+.input-group2 select {
   background-color: #0E4439;
   font-size: 1rem;
   border-radius: 8px;
@@ -111,19 +116,19 @@
   outline: none;
 }
 
-.input-group2 {
+.input-group3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 80%;
 }
 
-.input-group2 label{
+.input-group3 label{
   color: #F8F9FA;
   font-weight: bold;
 }
 
-.input-group2 input {
+.input-group3 input {
   background-color: #0E4439;
   font-size: 1rem;
   border-radius: 8px;
@@ -164,7 +169,7 @@
 
 .itens-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   align-items: flex-start;
   justify-items: center;
   box-sizing: border-box;
@@ -197,6 +202,7 @@
 
   .itens-container {
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
   }
 }
+

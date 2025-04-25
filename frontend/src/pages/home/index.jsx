@@ -133,7 +133,7 @@ export function Home() {
           <div className="filtros-container">
             <h3>Filtrar</h3>
             <hr />
-            <div className="input-group">
+            <div className="input-group2">
               <label htmlFor="estado">Estado</label>
               <select
                 name="estado"
@@ -147,7 +147,7 @@ export function Home() {
               </select>
             </div>
 
-            <div className="input-group">
+            <div className="input-group2">
               <label htmlFor="cidade">Cidade</label>
               <select name="cidade" id="cidade" onChange={e => {setCidade(e.target.value)}}>
                 <option value="">Selecione uma cidade</option>
@@ -159,7 +159,7 @@ export function Home() {
               </select>
             </div>
 
-            <div className="input-group">
+            <div className="input-group2">
               <label htmlFor="status">Status</label>
               <select name="status" id="status" onChange={e => setStatus(e.target.value)}>
                 <option value="">Selecione um status</option>
@@ -168,7 +168,7 @@ export function Home() {
               </select>
             </div>
 
-            <div className="input-group">
+            <div className="input-group2">
               <label htmlFor="categoria">Categoria</label>
               <select name="categoria" id="categoria" onChange={e => setCategoria(e.target.value)}>
                 <option value="">Selecione uma categoria</option>
@@ -180,7 +180,7 @@ export function Home() {
 
             <hr />
             <p>Definir periodo de tempo</p>
-            <div className="input-group2">
+            <div className="input-group3">
               <label htmlFor="data_inicio">Inicio</label>
               <input
                 type="date"
@@ -192,7 +192,7 @@ export function Home() {
               />
             </div>
 
-            <div className="input-group2">
+            <div className="input-group3">
               <label htmlFor="data_fim">Fim</label>
               <input
                 type="date"

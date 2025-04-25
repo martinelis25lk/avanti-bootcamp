@@ -1,16 +1,5 @@
-/* Container que envolve todos os itens */
-.items-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  padding: 2rem;
-  background-color: #F8F9FA;
-}
-
-/* Caixa individual de cada item */
 .item-card {
-  width: 250px;
+  width: 320px;
   background-color: #ffffff;
   border-radius: 10px;
   padding: 20px;
@@ -21,6 +10,7 @@
   align-items: center;
   position: relative; /* Necessário para posicionamento absoluto dos botões */
   transition: transform 0.2s ease-in-out;
+
 }
 
 .item-card:hover {
@@ -67,16 +57,52 @@
   object-fit: cover;
 }
 
-/* Detalhes do item abaixo da imagem */
 .item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   font-size: 0.9rem;
   color: #333;
   width: 100%;
+  color: #146152;
+}
+
+.date-location {
+  font-weight: bold;
+  color:#146152;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.item-data {
+  text-align: left;
+}
+
+.item-localizacao {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.item-contact {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.localizacao {
+  font-weight: bold;
 }
 
 .item-details p {
   margin: 5px 0;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .item-details strong {
@@ -84,6 +110,17 @@
   color: #146152;
 }
 
+.item-categoria {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  display: flex;
+  gap: 10px;
+  border: 1px solid #0e3d33;
+  padding: 2px 8px;
+  border-radius: 8px;
+  color: #0e3d33;
+}
 
 .item-actions {
   position: absolute;

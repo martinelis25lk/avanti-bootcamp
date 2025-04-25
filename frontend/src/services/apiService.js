@@ -38,7 +38,6 @@ export const getItensDoUsuario = async () => {
   }
 };
 
-}
 
 export const cadastrarItem = async (token, itemData) => {
   let response
