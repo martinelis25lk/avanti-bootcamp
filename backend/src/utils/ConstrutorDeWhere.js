@@ -1,4 +1,4 @@
-export function construirWhere({categoria, cidade, status, data_inicio, data_fim, nome, id}) {
+export function construirWhere({categoria, cidade, status, data_inicio, data_fim, nome, id, estado}) {
 
     const filtro = {}
 
@@ -34,6 +34,10 @@ export function construirWhere({categoria, cidade, status, data_inicio, data_fim
 
     if(id){
       filtro.id = parseInt(id);
+    }
+
+    if(estado){
+      filtro.estado = estado;
     }
 
     return filtro;
