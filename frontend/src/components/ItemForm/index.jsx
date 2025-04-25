@@ -22,7 +22,7 @@ export function ItemForm({isEdit}) {
   const [isLoading, setIsLoading] = useState(false);
   const [isItemCreated, setIsItemCreated] = useState(false);
   const { register, handleSubmit, formState: { errors }, control, setValue } = useForm();
-  const { token, isAuthenticated, usuarioTelefone, usuarioEmail, logout } = useContext(AuthContext);
+  const { token, isAuthenticated, usuario, logout } = useContext(AuthContext);
   const {itemId} = useParams();
 
   const navigate = useNavigate();
@@ -90,8 +90,8 @@ export function ItemForm({isEdit}) {
   const handleAutopreencher = (e) => {
     setReadOnly(e.target.checked)
     if(e.target.checked){
-      setValue("telefone", usuarioTelefone)
-      setValue("email", usuarioEmail)
+      setValue("telefone", usuario.telefone)
+      setValue("email", usuario.email)
     } else {
       setValue("telefone", "")
       setValue("email", "")

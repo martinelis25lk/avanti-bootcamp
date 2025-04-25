@@ -34,17 +34,6 @@ export const cadastrarItem = async (token, itemData) => {
 
 }
 
-export const cadastrarUsuario = async (usuarioData) => {
-  try {
-    const response = await api.post("/usuario", usuarioData);
-    return response.data;
-
-  } catch(error) {
-    console.error(error);
-    throw error;
-  }
-}
-
 export const atualizarItem = async (token, id, itemData) => {
   let response
 
@@ -63,6 +52,33 @@ export const atualizarItem = async (token, id, itemData) => {
   }
 
 }
+
+export const cadastrarUsuario = async (usuarioData) => {
+  try {
+    const response = await api.post("/usuario", usuarioData);
+    return response.data;
+
+  } catch(error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export const editarUsuario = async(token, usuarioData) => {
+  try {
+    const response = await api.put("/usuario", usuarioData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    return response.data;
+  } catch(error) {
+    console.error(error)
+    throw error
+  }
+}
+
 
 export const listarCategoria = async (token) => {
   try {

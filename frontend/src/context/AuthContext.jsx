@@ -3,58 +3,65 @@ import { createContext, useEffect, useState } from "react"
 export const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
-    const [usuarioId, setUsuarioId] = useState(localStorage.getItem("id"));
-    const [usuarioTelefone, setUsuarioTelefone] = useState(localStorage.getItem("telefone"));
-    const [usuarioEmail, setUsuarioEmail] = useState(localStorage.getItem("email"))
-    const [token, setToken] = useState(localStorage.getItem("token"));
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [usuario, setUsuario] = useState({
+    id: localStorage.getItem("id"),
+    telefone: localStorage.getItem("telefone"),
+    email: localStorage.getItem("email"),
+    nome: localStorage.getItem("nome")
 
-    const sign = (data) => {
-      setUsuarioId(data.usuario.id);
-      setToken(data.token);
-      localStorage.setItem("id", data.usuario.id);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("telefone", data.usuario.telefone);
-      localStorage.setItem("email", data.usuario.email);
+  });
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-      setIsAuthenticated(true)
+  const sign = (data) => {
+    setUsuario(data.usuario);
+    setToken(data.token);
+    localStorage.setItem("id", data.usuario.id);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("telefone", data.usuario.telefone);
+    localStorage.setItem("email", data.usuario.email);
+    localStorage.setItem("nome", data.usuario.nome);
+
+    setIsAuthenticated(true)
+  }
+
+  const logout = () => {
+    setUsuario(null)
+    setToken(null);
+
+    localStorage.removeItem("id");
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("telefone");
+    localStorage.removeItem("nome")
+
+    setIsAuthenticated(false)
+  }
+
+  useEffect(() => {
+    const localUsuario = {
+      id: localStorage.getItem("id"),
+      telefone: localStorage.getItem("telefone"),
+      email: localStorage.getItem("email"),
+      nome: localStorage.getItem("nome")
     }
 
-    const logout = () => {
-      setUsuarioId(null);
-      setToken(null);
+    const localToken = localStorage.getItem("token");
 
-      localStorage.removeItem("id");
-      localStorage.removeItem("token");
-      localStorage.removeItem("email");
-      localStorage.removeItem("telefone");
 
-      setIsAuthenticated(false)
-    }
+    if(localToken)
+      setToken(localToken)
+    if(localUsuario.nome && localUsuario.email && localUsuario.id && localUsuario.telefone)
+      setUsuario(localUsuario)
 
-    useEffect(() => {
-      const localToken = localStorage.getItem("token");
-      const localId = localStorage.getItem("id");
-      const localEmail = localStorage.getItem("email");
-      const localTelefone = localStorage.getItem("telefone");
+    setIsAuthenticated(localToken && localUsuario.nome && localUsuario.email && localUsuario.id && localUsuario.telefone)
+  },[])
 
-      if(localToken)
-        setToken(localToken)
-      if(localId)
-        setUsuarioId(localId)
-      if(localEmail)
-        setUsuarioEmail(localEmail)
-      if(localTelefone)
-        setUsuarioTelefone(localTelefone)
-
-      setIsAuthenticated(localToken && localId && localEmail && localTelefone)
-    },[])
-
-   return (
-    <AuthContext.Provider value={({usuarioId, token, sign, logout, isAuthenticated, usuarioEmail, usuarioTelefone})}>
-      {children}
-    </AuthContext.Provider>
-   )
+  return (
+  <AuthContext.Provider value={({usuario, setUsuario, token, sign, logout, isAuthenticated})}>
+    {children}
+  </AuthContext.Provider>
+  )
 }
 
 export default AuthProvider;

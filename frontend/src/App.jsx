@@ -4,6 +4,7 @@ import { Login } from "./pages/login"
 import { ItemForm } from "./components/ItemForm"
 import { CadastroUsuario } from "./pages/cadastro-usuario"
 import { Home } from "./pages/home"
+import GerenciarConta from "./pages/gerenciar-usuario"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/cadastrar-usuario" element={<CadastroUsuario/>}/>
         <Route path="/cadastrar-item" element={<ItemForm isEdit={false}/>}/>
         <Route path="/atualizar-item/:itemId" element={<ItemForm isEdit={true}/>}/>
+        <Route path="/editar-perfil" element={<GerenciarConta/>}/>
       </Routes>
     </BrowserRouter>
   )

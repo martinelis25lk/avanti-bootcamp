@@ -18,6 +18,10 @@ body {
   outline: none;
 }
 
+.input input{
+  color: #146152;
+}
+
 .input-erro {
   background-color: #f1a7a0;
   padding: 0.9rem;

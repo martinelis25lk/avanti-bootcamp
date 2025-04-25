@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  width: 100%;
+  height: calc(100% - 56px);
+}
+
+.page-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+
+.form-content button {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.button-group button {
+  width: auto;
+  flex-grow: 1;
+}
+
+.form-box {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  width: 800px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-group {
+  width: 100%;
+}
+
+.form-box h2 {
+  color: #175f52;
+  font-weight: bold;
+  margin-bottom: 64px;
+}
+
+.form-box form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-items: center;
+  gap: 16px;
+}
+
+.form-box label {
+  display: block;
+  text-align: left;
+  margin-top: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #175f52
+}
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 16px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn.save {
+  background-color: #175f52;
+}
+
+.btn.delete {
+  background-color: #b22222;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
