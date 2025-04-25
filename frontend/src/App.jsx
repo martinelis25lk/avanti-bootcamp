@@ -1,4 +1,5 @@
 import './App.css'
+import { MeusItens } from "./pages/MeusItems";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom"
 import { Login } from "./pages/login"
 import { ItemForm } from "./components/ItemForm"
@@ -11,6 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/meus-itens" element={<MeusItens />} />
         <Route path="/login" element={<Login/>}/>
         <Route path="/cadastrar-usuario" element={<CadastroUsuario/>}/>
         <Route path="/cadastrar-item" element={<ItemForm isEdit={false}/>}/>
@@ -18,7 +20,7 @@ function App() {
         <Route path="/editar-perfil" element={<GerenciarConta/>}/>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
