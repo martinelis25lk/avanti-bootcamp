@@ -100,7 +100,7 @@ function GerenciarConta() {
           <div className="mensagem-exclusao">
             <p>Tem certeza de que deseja excluir sua conta?</p>
             <div className="botoes-modal">
-              <button id="sim" onClick={deleteHandle}>Sim</button>
+              <button id="sim" onClick={() => deleteHandle()}>Sim</button>
               <button id="nao" onClick={() => setIsDeleting(false)}>Não</button>
             </div>
           </div>
