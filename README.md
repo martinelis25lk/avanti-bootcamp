@@ -94,7 +94,7 @@ Executar o comando abaixo:
 npm run dev
 ```
 
-## ⚙️ Configuração e Execução do Back-end
+## ⚙️ Configuração e Execução do frontend
 
 Aqui são apresentadas as configurações do arquivo `.env` a ser criado, a configuração do banco de dados, além da instalação e execução do projeto.
 
@@ -102,23 +102,10 @@ Aqui são apresentadas as configurações do arquivo `.env` a ser criado, a conf
 
 Este arquivo descreve as variáveis de ambiente que precisam ser configuradas no arquivo para a correta execução da aplicação. Após criar o arquivo `.env` na raiz do projeto, configurar:
 
-- **DATABASE_URL**: Endereço completo para conexão com o banco de dados PostgreSQL. Inclui informações como protocolo, usuário, senha, host, porta e nome do banco de dados:
-  -  **usuario**: usuário do banco de dados;
-  -  **senha**: senha do banco de dados;
-  -  **host**: endereço do banco de dados;
-  -  **porta**: porta do banco de dados;
-  -  **banco**: nome do banco de dados.
-- **PRIVATE_KEY**: chave secreta usada para assinar tokens JWT. Deve ser mantida em sigilo para garantir a segurança da aplicação. Pode ser alterada para maior segurança;
-- **EXPIRES_IN**: tempo de expiração dos tokens de autenticação. Neste caso, o valor `"5h"` indica que os tokens terão uma validade de 5 horas.
-- **APP_URL**: url onde a aplicação será executada. Neste caso, o valor `"http://localhost:3000"` indica que ela será executada localmente na porta 3000.
+- **VITE_API_BASE_URL**: A base do endereço onde a API está rodando
 
 ```env
-  DATABASE_URL="postgres://usuario:senha@host:porta/banco"
-  
-  PRIVATE_KEY="secret"
-  EXPIRES_IN="5h"
-
-  APP_URL="http://localhost:3000"
+  VITE_API_BASE_URL = "http://localhost:3000"
 ```
 
 ### 📌 Instalar dependências:
@@ -127,15 +114,6 @@ Executar o comando abaixo.
 
 ```sh
 npm install
-```
-
-### 📌 Configurar o banco de dados:
-
-Executar os comandos abaixo, um por um.
-
-```sh
-npx prisma migrate dev
-npx prisma db seed
 ```
 
 ### 📌 Rodar a aplicação:
