@@ -42,6 +42,11 @@ Objetos perdidos em locais públicos — como escolas, parques e centros comunit
 - **PostgreSQL**: banco de dados relacional;
 - **Swagger**: documentação da API. Para visualizar a documentação das rotas basta acessar **http://localhost:3000/api-docs/**.
 
+### 📌 Frontend:
+- **Reactjs**: estrutura para criação do projeto;
+- **React-Icons**: utilizado para adição dos icones do projeto;
+- **Axios**: utilizado para comunicação entre o frontend e o backend;
+
 ## ⚙️ Configuração e Execução do Back-end
 
 Aqui são apresentadas as configurações do arquivo `.env` a ser criado, a configuração do banco de dados, além da instalação e execução do projeto.
@@ -96,7 +101,7 @@ npm run dev
 
 ## ⚙️ Configuração e Execução do frontend
 
-Aqui são apresentadas as configurações do arquivo `.env` a ser criado, a configuração do banco de dados, além da instalação e execução do projeto.
+Aqui são apresentadas as configurações do arquivo `.env` a ser criado, além da instalação e execução do projeto.
 
 ### 📌 .env:
 
