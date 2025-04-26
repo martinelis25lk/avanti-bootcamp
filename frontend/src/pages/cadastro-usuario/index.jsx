@@ -26,9 +26,7 @@ export function CadastroUsuario() {
       navigate("/")
 
     } catch (error) {
-      console.log(error.status == 409)
       if(error.status == 409){
-        console.log("Errrrouuuuu")
         setResponseError(error.response.data.erro)
       }
     }

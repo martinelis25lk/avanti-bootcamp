@@ -5,7 +5,8 @@
   display: flex;
   flex-direction: row;
   background-color: #146152;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .cadastro-wrapper {

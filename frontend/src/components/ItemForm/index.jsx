@@ -9,7 +9,6 @@ import { useForm, Controller } from "react-hook-form";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 
-
 export function ItemForm({isEdit}) {
 
   const [item, setItem] = useState(null);
@@ -269,7 +268,7 @@ export function ItemForm({isEdit}) {
                 name="imagem"
                 id="imagem"
                 accept="image/*"
-                className="input"
+                className="hidden"
                 onChange={e => {
                   setImagem(e.target.files[0])
                   setImgNome(e.target.files[0].name)

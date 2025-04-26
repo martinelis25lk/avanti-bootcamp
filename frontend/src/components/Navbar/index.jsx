@@ -8,6 +8,11 @@ export function Navbar() {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate()
 
+  const handleLogout = () => {
+    logout()
+    navigate("/login")
+  }
+
   return (
     <nav>
       <img
@@ -25,7 +30,7 @@ export function Navbar() {
         <li>
           <a href="/cadastrar-item">Cadastrar Item</a>
         </li>
-        <li onClick={logout}>
+        <li onClick={handleLogout}>
           Sair
         </li>
       </ul>

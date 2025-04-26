@@ -54,7 +54,7 @@ export function ItemCard({item, atualizarLista}) {
           <p className="item-data">{formatarData(item.data_ocorrido)}</p>
           <p className="item-localizacao">{`${item.estado}-${item.cidade}`}</p>
         </div>
-        <p className="localizacao"><RiMapPin2Line/> {item.logradouro}, {item.numero ? "SN" : item.numero}, Bairro {item.bairro}</p>
+        <p className="localizacao"><RiMapPin2Line/> {item.logradouro}, {!item.numero ? "SN" : item.numero}, Bairro {item.bairro}</p>
         <div className="item-contact">
           <p><RiPhoneLine/> {item.telefone}</p>
           <p><MdOutlineMailOutline/> {item.email}</p>

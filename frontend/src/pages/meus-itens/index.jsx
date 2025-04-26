@@ -2,7 +2,6 @@ import './style.css';
 import { useEffect, useState } from "react";
 import { getItensDoUsuario } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
-import { FaEdit, FaTrash } from "react-icons/fa"; // Ícones
 import { Navbar } from "../../components/Navbar";
 import { ItemCard } from "../../components/ItemCard";
 
