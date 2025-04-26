@@ -8,5 +8,5 @@ const imgRouter = Router();
 const imgController = new ImgController();
 
 imgRouter.post("/item/img/:itemId", authMiddleware, imgUploadMiddleware.single("imagem"), imgController.uploadImgItem)
-imgRouter.get("/item/img/:nomeImg", authMiddleware, imgController.downloadImgItem)
+imgRouter.get("/item/img/:nomeImg", imgController.downloadImgItem)
 export default imgRouter;

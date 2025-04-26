@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import "./style.css"
 import { AuthContext } from "../../context/AuthContext";
 import { login } from "../../services/apiService";
@@ -26,9 +26,13 @@ export function Login () {
     }
   }
 
-  if(isAuthenticated){
-    navigate("/")
-  }
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      navigate("/")
+    }
+  },[isAuthenticated, navigate])
+
 
   return (
     <div className="login-container">

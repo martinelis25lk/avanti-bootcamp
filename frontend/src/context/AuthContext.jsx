@@ -12,6 +12,7 @@ const AuthProvider = ({children}) => {
   });
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoadingAuthentication, setIsLoadingAuthentication] = useState(true);
 
   const sign = (data) => {
     setUsuario(data.usuario);
@@ -54,11 +55,19 @@ const AuthProvider = ({children}) => {
     if(localUsuario.nome && localUsuario.email && localUsuario.id && localUsuario.telefone)
       setUsuario(localUsuario)
 
-    setIsAuthenticated(localToken && localUsuario.nome && localUsuario.email && localUsuario.id && localUsuario.telefone)
+    const isLoggedIn =
+      !!localToken &&
+      !!localUsuario.nome &&
+      !!localUsuario.email &&
+      !!localUsuario.id &&
+      !!localUsuario.telefone;
+
+    setIsAuthenticated(isLoggedIn);
+    setIsLoadingAuthentication(false);
   },[])
 
   return (
-  <AuthContext.Provider value={({usuario, setUsuario, token, sign, logout, isAuthenticated})}>
+  <AuthContext.Provider value={({usuario, setUsuario, token, sign, logout, isAuthenticated, isLoadingAuthentication})}>
     {children}
   </AuthContext.Provider>
   )

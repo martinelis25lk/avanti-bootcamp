@@ -105,3 +105,51 @@ body {
 .btn:hover {
   opacity: 0.9;
 }
+
+.mensagem-exclusao {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #146152;
+  background-color: #FAFAFA;
+  width: 30%;
+  height: 20%;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.botoes-modal {
+  display: flex;
+  gap: 16px;
+}
+
+.botoes-modal button {
+  padding: 4px 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  color: #FAFAFA;
+  transition: background-color 0.5s ease-in;
+  transition: transform 0.5s ease-in;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+}
+
+.botoes-modal #sim {
+  background-color: #b22222;
+
+  &:hover {
+    background-color: #8a1515;
+  }
+}
+
+.botoes-modal #nao {
+  background-color: #146152;
+}

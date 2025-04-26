@@ -24,23 +24,10 @@ export function MeusItens() {
     fetchItens();
   }, []);
 
-  const formatarData = (data) => {
-    const novaData = new Date(data);
-    return novaData.toLocaleDateString();
-  };
-
-  const navigateTo = (path) => {
-    navigate(path);
-  };
-
-  const editarItem = (id) => {
-    navigate(`/editar-item/${id}`);
-  };
-
-  const excluirItem = (id) => {
-    console.log("Excluir item com ID:", id);
-    // pra mexer dps
-  };
+  const handleAtualizarItens = (id) => {
+    const ItensAtualizado = itens.filter(item => (item.id != id))
+    setItens(ItensAtualizado)
+  }
 
   return (
     <div>
@@ -52,7 +39,11 @@ export function MeusItens() {
           itens.length > 0
           ?
           itens.map((item) => (
-          <ItemCard item={item}/>
+            <ItemCard
+              item={item}
+              atualizarLista={handleAtualizarItens}
+              key={item.id}
+            />
           ))
           :
           <p>Você ainda não cadastrou nenhum item.</p>

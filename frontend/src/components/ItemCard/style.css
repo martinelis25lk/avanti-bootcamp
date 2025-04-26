@@ -10,7 +10,6 @@
   align-items: center;
   position: relative; /* Necessário para posicionamento absoluto dos botões */
   transition: transform 0.2s ease-in-out;
-
 }
 
 .item-card:hover {
@@ -50,8 +49,8 @@
 
 /* Imagem do item */
 .item-image {
-  width: 100%;
-  height: auto;
+  width: 320px;
+  height: 215px;
   border-radius: 8px;
   margin: 10px 0;
   object-fit: cover;

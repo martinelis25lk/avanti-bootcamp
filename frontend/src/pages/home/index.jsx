@@ -26,9 +26,6 @@ export function Home() {
 
   const navigate = useNavigate();
 
-  if(!isAuthenticated)
-    navigate("/login")
-
   useEffect(() => {
     async function fetchCategorias() {
       const categoriasData = await listarCategoria(token);
@@ -104,6 +101,11 @@ export function Home() {
     const itensData = await listarItens(token, query);
     setItens(itensData);
     setItensFiltrados(itensData);
+  }
+
+  const handleAtualizarItens = (id) => {
+    const ItensAtualizado = itens.filter(item => (item.id != id))
+    setItens(ItensAtualizado)
   }
 
   return (
@@ -214,7 +216,7 @@ export function Home() {
             itensFiltrados.length > 0
             ?
             itensFiltrados.map(item => (
-              <ItemCard item={item}/>
+              <ItemCard item={item} atualizarLista={handleAtualizarItens} key={item.id}/>
             ))
             :
             <h3>Poxa vida! Não encontramos nenhum objeto :(</h3>

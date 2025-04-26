@@ -1,5 +1,5 @@
 .banner-container {
-  height: 100vh;
+  height: 100%;
   width: 50vw;
   background: linear-gradient(rgba(20, 97, 82, 0.4), rgba(20, 97, 82, 0.6)), url('banner-background.png');
   background-size: cover;

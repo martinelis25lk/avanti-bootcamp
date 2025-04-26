@@ -4,7 +4,7 @@ import { MdOutlineFileUpload } from "react-icons/md"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { GiConfirmed } from "react-icons/gi";
 import { useContext, useEffect, useState } from "react";
-import { atualizarItem, cadastrarItem, enviarImagem, getEstados, getMunicipios, listarItemPorId } from "../../services/apiService.js";
+import { atualizarItem, cadastrarItem, enviarImagem, getEstados, getMunicipios, listarCategoria, listarItemPorId } from "../../services/apiService.js";
 import { useForm, Controller } from "react-hook-form";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,6 +17,7 @@ export function ItemForm({isEdit}) {
   const [readOnly, setReadOnly] = useState(false);
   const [estados, setEstados] = useState([]);
   const [municipios, setMunicipios] = useState([]);
+  const [categorias, setCategorias]=  useState([])
   const [estado, setEstado] = useState("");
   const [imagem, setImagem] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -45,10 +46,15 @@ export function ItemForm({isEdit}) {
       const item = await listarItemPorId(token, itemId);
       setItem(item)
     }
+    async function fetchCategorias() {
+          const categoriasData = await listarCategoria(token);
+          setCategorias(categoriasData)
+        }
 
     if(isEdit)
       fetchItem()
 
+    fetchCategorias()
     fetchEstados()
   }, [])
 
@@ -231,9 +237,9 @@ export function ItemForm({isEdit}) {
               {...register("categoria_id", { required: "O objeto precisa ter uma categoria" })}
             >
               <option value="">Selecione uma categoria</option>
-              <option value="1">Eletrônico</option>
-              <option value="2">Acessório</option>
-              <option value="3">Documento</option>
+              {categorias.map(ctg => (
+                  <option value={ctg.id} key={ctg.id}>{ctg.nome}</option>
+              ))}
             </select>
             {errors.categoria_id && <p className="erro">{errors.categoria_id.message}</p>}
           </div>

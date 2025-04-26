@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : "http://localhost:3000"
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
 });
@@ -14,21 +16,43 @@ export const login = async (dados) => {
   }
 };
 
-// Função para pegar os itens do usuário
+export const deletarUsuario = async (token) => {
+  try {
+    api.delete("/usuario", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+  } catch (error) {
+    console.error(error)
+    throw(error)
+  }
+}
+
+export const deletarItem = async (token, itemId) => {
+  try {
+    api.delete(`/item/${itemId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+  } catch (error) {
+    console.error(error)
+    throw(error)
+  }
+}
+
 export const getItensDoUsuario = async () => {
-  // Aqui, podemos pegar o token diretamente do localStorage
   const token = localStorage.getItem("token");
 
-  // Verifica se o token existe antes de tentar fazer a requisição
   if (!token) {
     throw new Error("Token não encontrado. O usuário precisa estar autenticado.");
   }
 
   try {
-    // Fazendo a requisição para obter os itens do usuário
     const response = await api.get("/item/meu", {
       headers: {
-        Authorization: `Bearer ${token}`,  // Passando o token diretamente no header
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -37,7 +61,6 @@ export const getItensDoUsuario = async () => {
     throw error;
   }
 };
-
 
 export const cadastrarItem = async (token, itemData) => {
   let response
@@ -102,7 +125,6 @@ export const editarUsuario = async(token, usuarioData) => {
     throw error
   }
 }
-
 
 export const listarCategoria = async (token) => {
   try {

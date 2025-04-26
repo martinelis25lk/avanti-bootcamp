@@ -7,21 +7,19 @@ import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { GiConfirmed } from "react-icons/gi";
-import { editarUsuario } from "../../services/apiService";
+import { deletarUsuario, editarUsuario } from "../../services/apiService";
+import { Modal } from "../../components/Modal";
 
 function GerenciarConta() {
   const { register, handleSubmit, formState: { errors }, watch, setValue} = useForm();
-  const {logout, isAuthenticated, usuario, setUsuario,token} = useContext(AuthContext);
+  const {logout, usuario, setUsuario, token} = useContext(AuthContext);
   const [cmfSenhaVisivel, setCmfSenhaVisivel] = useState(false);
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isUsarEdited, setIsUsetEdited] = useState(false);
+  const [isUserEdited, setIsUserEdited] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate()
   const senha = watch("senha");
-
-
-  if(!isAuthenticated)
-    navigate("/login")
 
   const sleep = async (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -38,7 +36,7 @@ function GerenciarConta() {
         telefone: usuarioAtualizado.id
       })
 
-      setIsUsetEdited(true)
+      setIsUserEdited(true)
       await sleep(2000)
       setIsLoading(false)
     } catch (error) {
@@ -48,6 +46,13 @@ function GerenciarConta() {
       }
     }
 
+  }
+
+  const deleteHandle = async () => {
+    console.log("Apagou")
+    await deletarUsuario(token)
+    logout()
+    navigate("/login")
   }
 
   const handleCfmSenhaVisibilidade = () => {
@@ -66,10 +71,11 @@ function GerenciarConta() {
   return (
     <div className="page-container">
       <Navbar/>
-      <div className={isLoading ? "modal" : "modal hidden"}>
-              <div className="mensagem">
+      <Modal
+        children={
+          <div className="mensagem">
                 {
-                  isUsarEdited ?
+                  isUserEdited ?
                   <>
                     <GiConfirmed
                       size={24}
@@ -86,7 +92,21 @@ function GerenciarConta() {
                   </>
                 }
               </div>
+        }
+        isVisible={isLoading}
+      />
+      <Modal
+        children={
+          <div className="mensagem-exclusao">
+            <p>Tem certeza de que deseja excluir sua conta?</p>
+            <div className="botoes-modal">
+              <button id="sim" onClick={deleteHandle}>Sim</button>
+              <button id="nao" onClick={() => setIsDeleting(false)}>Não</button>
             </div>
+          </div>
+        }
+        isVisible={isDeleting}
+      />
       <div className="container">
         <div className="form-box">
           <h2>Gerencie sua conta</h2>
@@ -181,7 +201,7 @@ function GerenciarConta() {
               <button type="submit" className="btn save">
                 Salvar
               </button>
-              <button type="button" className="btn delete">
+              <button type="button" className="btn delete" onClick={() => {setIsDeleting(prev => !prev)}}>
                 Excluir Conta
               </button>
             </div>
