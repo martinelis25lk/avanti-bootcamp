@@ -1,4 +1,4 @@
-# 🔍 Sistema Comunitário de Achados e Perdidos
+# 🔍 Portal Localiza - Um sistema comunitário de achados e perdidos.
 
 Objetos perdidos em locais públicos — como escolas, parques e centros comunitários — frequentemente não são recuperados por falta de um sistema que facilite o contato entre quem perdeu e quem encontrou. Com isso em mente, este projeto apresenta uma solução acessível: uma aplicação simples que permite registrar e procurar itens perdidos ou encontrados, promovendo a colaboração entre os usuários.
 
